@@ -3,7 +3,7 @@
 import Image from 'next/image'
 
 const HERO_IMG      = 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/Hero/5daf41b8-a178-4b31-bb2c-c6fd889d0328.png'
-const LIFESTYLE_IMG = 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/Hero/5fee06ca-257e-42dd-b078-9d6ac3fdfbe5.png'
+const LIFESTYLE_IMG = 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/Hero/8243839b-a4f2-4425-be6d-c31ee53e82ca.png'
 const INFO_IMG      = 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/Hero/503de020-704b-46a2-9a39-6897310a4cb6.png'
 
 const trustBullets = [

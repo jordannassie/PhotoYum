@@ -4,6 +4,7 @@ import Hero from '@/components/Hero'
 import Stats from '@/components/Stats'
 import Included from '@/components/Included'
 import ProductShowcase from '@/components/ProductShowcase'
+import VideoShowcase from '@/components/VideoShowcase'
 import Pricing from '@/components/Pricing'
 import HowItWorks from '@/components/HowItWorks'
 import ContactForm from '@/components/ContactForm'
@@ -21,6 +22,7 @@ export default function Home() {
         <Stats />
         <Included />
         <ProductShowcase />
+        <VideoShowcase />
         <Pricing />
         <HowItWorks />
         <ContactForm />

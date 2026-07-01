@@ -5,7 +5,7 @@ import { useState } from 'react'
 const faqs = [
   {
     q: 'Do I need to ship my product?',
-    a: 'No. For the MVP, you can send current product photos, listing images, or product renders. We work with what you have.',
+    a: 'No. In most cases, you do not need to ship your product. You can upload existing product photos, packaging images, product renders, or your Amazon listing. If we need the physical product for a specific shoot, we\'ll let you know before starting.',
   },
   {
     q: 'Is this Amazon compliant?',
