@@ -63,11 +63,15 @@ export default function ContactForm() {
         body: JSON.stringify({ source: 'form', ...fields }),
       })
       const json = await res.json()
-      if (!res.ok) throw new Error(json.error || 'Submit failed')
+      if (!res.ok) {
+        console.error('[ContactForm] API error response:', json)
+        throw new Error(json.supabase_error || json.error || `HTTP ${res.status}`)
+      }
       setFormState('success')
     } catch (err) {
-      console.error(err)
-      setErrorMsg('Something went wrong. Please try again or email us directly.')
+      const msg = err instanceof Error ? err.message : String(err)
+      console.error('[ContactForm] Submit failed:', msg)
+      setErrorMsg(`Something went wrong: ${msg}. Please try again or email us directly.`)
       setFormState('error')
     }
   }
