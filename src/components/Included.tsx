@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 const items = [
   {
     icon: (
@@ -107,46 +109,49 @@ export default function Included() {
 
           {/* Right: visual cards */}
           <div className="grid grid-cols-2 gap-4">
-            {/* Hero image card */}
-            <div className="col-span-2 bg-gradient-to-br from-[#146EB4]/5 to-[#146EB4]/10 rounded-2xl p-5 border border-[#146EB4]/20">
-              <div className="flex items-start justify-between mb-3">
-                <span className="bg-[#FF9900] text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">Hero Image</span>
-              </div>
-              <div className="flex items-center justify-center h-28">
-                <svg viewBox="0 0 200 100" className="w-full h-full" fill="none">
-                  <rect width="200" height="100" rx="8" fill="white" fillOpacity="0.5" />
-                  <rect x="70" y="10" width="60" height="80" rx="10" fill="#146EB4" fillOpacity="0.2" stroke="#146EB4" strokeWidth="1.5" />
-                  <rect x="80" y="25" width="40" height="50" rx="4" fill="white" fillOpacity="0.8" />
-                  <rect x="85" y="30" width="30" height="4" rx="2" fill="#FF9900" />
-                  <rect x="85" y="38" width="25" height="3" rx="1.5" fill="#111827" fillOpacity="0.5" />
-                  <rect x="85" y="45" width="20" height="3" rx="1.5" fill="#111827" fillOpacity="0.3" />
-                </svg>
-              </div>
-              <p className="text-xs font-medium text-[#146EB4] mt-2 text-center">Clean white background hero</p>
+            {/* Hero image card — full width */}
+            <div className="col-span-2 rounded-2xl overflow-hidden shadow-md border border-gray-100 relative group">
+              <Image
+                src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/section1/7cf12a5c-1a62-4d5f-a9a5-fa4c498c48d1.png"
+                alt="Hero product image example"
+                width={800}
+                height={500}
+                className="w-full h-auto object-cover"
+                unoptimized
+              />
+              <span className="absolute top-3 left-3 bg-[#FF9900] text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide shadow">
+                Hero Image
+              </span>
             </div>
 
             {/* Lifestyle card */}
-            <div className="bg-gradient-to-br from-emerald-50 to-emerald-100/50 rounded-2xl p-4 border border-emerald-200/50">
-              <span className="bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">Lifestyle</span>
-              <div className="flex items-center justify-center h-20 mt-2">
-                <svg viewBox="0 0 100 80" className="w-full h-full" fill="none">
-                  <circle cx="50" cy="40" r="30" fill="#d1fae5" />
-                  <path d="M35 45 C40 35 45 38 50 40 C55 42 60 35 65 45" stroke="#059669" strokeWidth="2" strokeLinecap="round" />
-                  <circle cx="50" cy="30" r="8" fill="#6ee7b7" />
-                </svg>
-              </div>
-              <p className="text-xs font-medium text-emerald-700 mt-1 text-center">In-use lifestyle</p>
+            <div className="rounded-2xl overflow-hidden shadow-md border border-gray-100 relative">
+              <Image
+                src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/section1/a8a9ef31-686f-457a-ad74-ba66c1c1a1f5.png"
+                alt="Lifestyle image example"
+                width={400}
+                height={400}
+                className="w-full h-auto object-cover"
+                unoptimized
+              />
+              <span className="absolute top-2 left-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide shadow">
+                Lifestyle
+              </span>
             </div>
 
             {/* Infographic card */}
-            <div className="bg-gradient-to-br from-[#F8FAFC] to-blue-50/50 rounded-2xl p-4 border border-blue-100">
-              <span className="bg-[#146EB4] text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">Infographic</span>
-              <div className="flex flex-col justify-center h-20 mt-2 space-y-1.5 px-1">
-                {['• Supports Joint Health', '• Reduces Inflammation', '• Immune Support'].map((t) => (
-                  <div key={t} className="text-[9px] font-medium text-[#146EB4] bg-[#146EB4]/10 rounded px-1.5 py-0.5">{t}</div>
-                ))}
-              </div>
-              <p className="text-xs font-medium text-[#146EB4] mt-1 text-center">Key benefits</p>
+            <div className="rounded-2xl overflow-hidden shadow-md border border-gray-100 relative">
+              <Image
+                src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/section1/b9ce1a03-2787-424c-a2a4-296d868d87fb.png"
+                alt="Infographic image example"
+                width={400}
+                height={400}
+                className="w-full h-auto object-cover"
+                unoptimized
+              />
+              <span className="absolute top-2 left-2 bg-[#146EB4] text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide shadow">
+                Infographic
+              </span>
             </div>
           </div>
         </div>
