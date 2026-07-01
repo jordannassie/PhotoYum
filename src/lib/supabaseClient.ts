@@ -26,10 +26,12 @@ export const supabase = {
 export interface PhotoYumLead {
   name: string
   email: string
+  source?: string
   brand_name?: string
-  product_url?: string
+  product_listing_url?: string
   product_photo_url?: string
   product_count?: string
-  budget_option?: string
+  package_interest?: string
   improvement_notes?: string
+  chat_transcript?: string
 }
