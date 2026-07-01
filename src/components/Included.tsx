@@ -142,7 +142,7 @@ export default function Included() {
             {/* Infographic card */}
             <div className="rounded-2xl overflow-hidden shadow-md border border-gray-100 relative">
               <Image
-                src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/section1/b9ce1a03-2787-424c-a2a4-296d868d87fb.png"
+                src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/section1/ac04e263-5ef9-4e46-b775-fb9b6064ccc3.png"
                 alt="Infographic image example"
                 width={400}
                 height={400}
