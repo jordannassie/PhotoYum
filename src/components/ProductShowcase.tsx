@@ -43,7 +43,7 @@ export default function ProductShowcase() {
   const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading')
   const [errorDetail, setErrorDetail] = useState('')
   const [lightbox, setLightbox] = useState<string | null>(null)
-  const [gridMode, setGridMode] = useState<GridMode>('small')
+  const [gridMode, setGridMode] = useState<GridMode>('large')
 
   const fetchImages = async () => {
     setStatus('loading')

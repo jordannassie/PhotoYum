@@ -20,6 +20,7 @@ const PACKAGE_OPTIONS = [
 
 type Fields = {
   name: string
+  phone: string
   email: string
   brand_name: string
   product_listing_url: string
@@ -34,6 +35,7 @@ export default function ContactForm() {
   const [errorMsg, setErrorMsg] = useState('')
   const [fields, setFields] = useState<Fields>({
     name: '',
+    phone: '',
     email: '',
     brand_name: '',
     product_listing_url: '',
@@ -129,16 +131,22 @@ export default function ContactForm() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
 
-                {/* Name + Email */}
+                {/* Name + Phone */}
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="block text-sm font-semibold text-gray-700">Your Name <span className="text-red-500">*</span></label>
                     <input type="text" value={fields.name} onChange={set('name')} placeholder="Jane Smith" required className={inputClass} />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-gray-700">Email Address <span className="text-red-500">*</span></label>
-                    <input type="email" value={fields.email} onChange={set('email')} placeholder="jane@brand.com" required className={inputClass} />
+                    <label className="block text-sm font-semibold text-gray-700">Phone Number</label>
+                    <input type="tel" value={fields.phone} onChange={set('phone')} placeholder="+1 (555) 000-0000" className={inputClass} />
                   </div>
+                </div>
+
+                {/* Email */}
+                <div className="space-y-1.5">
+                  <label className="block text-sm font-semibold text-gray-700">Email Address <span className="text-red-500">*</span></label>
+                  <input type="email" value={fields.email} onChange={set('email')} placeholder="jane@brand.com" required className={inputClass} />
                 </div>
 
                 {/* Brand Name */}
