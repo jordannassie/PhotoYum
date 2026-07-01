@@ -41,10 +41,8 @@ const trustItems = [
 
 const steps = [
   {
-    number: 1,
-    accent: 'bg-[#1476ff]',
-    accentLight: 'bg-[#1476ff]/10',
-    accentText: 'text-[#1476ff]',
+    accent: 'text-[#1476ff]',
+    accentBg: 'bg-[#1476ff]/10',
     title: 'Submit Your Product',
     desc: 'Send your product photos and brief.',
     img: 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/howitworks/1.png',
@@ -55,10 +53,8 @@ const steps = [
     ),
   },
   {
-    number: 2,
-    accent: 'bg-[#FF9900]',
-    accentLight: 'bg-[#FF9900]/10',
-    accentText: 'text-[#FF9900]',
+    accent: 'text-[#FF9900]',
+    accentBg: 'bg-[#FF9900]/10',
     title: 'We Create Your Images',
     desc: 'Our expert team designs high-converting images.',
     img: 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/howitworks/2.png',
@@ -69,10 +65,8 @@ const steps = [
     ),
   },
   {
-    number: 3,
-    accent: 'bg-[#1476ff]',
-    accentLight: 'bg-[#1476ff]/10',
-    accentText: 'text-[#1476ff]',
+    accent: 'text-[#1476ff]',
+    accentBg: 'bg-[#1476ff]/10',
     title: 'Review & Request Edits',
     desc: 'You review and request any tweaks.',
     img: 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/howitworks/3.png',
@@ -83,10 +77,8 @@ const steps = [
     ),
   },
   {
-    number: 4,
-    accent: 'bg-[#FF9900]',
-    accentLight: 'bg-[#FF9900]/10',
-    accentText: 'text-[#FF9900]',
+    accent: 'text-[#FF9900]',
+    accentBg: 'bg-[#FF9900]/10',
     title: 'You Upload & Sell',
     desc: 'Get your images in 72 hours and start selling more.',
     img: 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/howitworks/4.png',
@@ -97,21 +89,6 @@ const steps = [
     ),
   },
 ]
-
-function Connector({ color }: { color: string }) {
-  return (
-    <div className="hidden lg:flex items-center justify-center w-8 flex-shrink-0 self-center">
-      <div className="flex items-center gap-0.5">
-        {[0, 1, 2].map((i) => (
-          <div key={i} className={`w-1.5 h-1.5 rounded-full ${color} opacity-50`} />
-        ))}
-        <svg className={`w-4 h-4 ${color} ml-0.5`} fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-        </svg>
-      </div>
-    </div>
-  )
-}
 
 export default function HowItWorks() {
   return (
@@ -132,54 +109,47 @@ export default function HowItWorks() {
           </h2>
         </div>
 
-        {/* Steps */}
-        <div className="flex flex-col lg:flex-row items-stretch gap-6 lg:gap-0">
+        {/* Step cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {steps.map((step, i) => (
-            <div key={step.number} className="flex flex-col lg:flex-row items-center lg:items-stretch flex-1 min-w-0">
-
-              {/* Card */}
-              <div className="relative bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden flex flex-col w-full max-w-sm mx-auto lg:max-w-none hover:shadow-xl transition-shadow duration-300">
-
-                {/* Number badge */}
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                  <div className={`${step.accent} text-white w-9 h-9 rounded-full flex items-center justify-center text-base font-extrabold shadow-lg border-2 border-white`}>
-                    {step.number}
-                  </div>
-                </div>
-
-                {/* Full image */}
-                <div className="relative w-full aspect-square overflow-hidden bg-gray-50 pt-4">
-                  <Image
-                    src={step.img}
-                    alt={step.title}
-                    fill
-                    className="object-contain object-center"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="px-5 pb-5 pt-4 flex flex-col gap-2">
-                  <div className="flex items-center gap-2">
-                    <div className={`${step.accentLight} ${step.accentText} w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0`}>
-                      {step.icon}
-                    </div>
-                    <h3 className="text-sm font-bold text-[#0f172a] leading-snug">{step.title}</h3>
-                  </div>
-                  <p className="text-xs text-gray-500 leading-relaxed pl-9">{step.desc}</p>
-                </div>
+            <div
+              key={i}
+              className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col"
+            >
+              {/* Image area */}
+              <div className="relative w-full aspect-square bg-gray-50 overflow-hidden">
+                <Image
+                  src={step.img}
+                  alt={step.title}
+                  fill
+                  className="object-contain object-center p-3"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                />
               </div>
 
-              {/* Connector */}
-              {i < steps.length - 1 && (
-                <Connector color={i % 2 === 0 ? 'text-[#FF9900]' : 'text-[#1476ff]'} />
-              )}
+              {/* Text content */}
+              <div className="px-5 py-5 flex flex-col gap-2 flex-1">
+                <div className="flex items-center gap-2.5">
+                  <div className={`${step.accentBg} ${step.accent} w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0`}>
+                    {step.icon}
+                  </div>
+                  <h3 className="text-sm font-bold text-[#0f172a] leading-snug">{step.title}</h3>
+                </div>
+                <p className="text-xs text-gray-500 leading-relaxed pl-[42px]">{step.desc}</p>
+              </div>
+
+              {/* Subtle step indicator at bottom */}
+              <div className="px-5 pb-4 pl-[54px]">
+                <span className="text-[10px] font-semibold text-gray-300 uppercase tracking-widest">
+                  Step {i + 1} of 4
+                </span>
+              </div>
             </div>
           ))}
         </div>
 
         {/* Trust strip */}
-        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
           {trustItems.map((item) => (
             <div key={item.title} className="bg-white rounded-2xl border border-gray-100 shadow-sm px-5 py-4 flex items-start gap-3">
               <div className="w-9 h-9 rounded-xl bg-[#1476ff]/10 text-[#1476ff] flex items-center justify-center flex-shrink-0">
