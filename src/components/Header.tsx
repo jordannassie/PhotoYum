@@ -55,7 +55,7 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
-                className="text-sm font-medium text-gray-600 hover:text-[#146EB4] transition-colors cursor-pointer"
+                className="text-sm font-medium text-gray-600 hover:text-[#0993d9] transition-colors cursor-pointer"
               >
                 {link.label}
               </a>
@@ -102,7 +102,7 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
-                className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-[#146EB4] hover:bg-blue-50 rounded-lg transition-colors cursor-pointer"
+                className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-[#0993d9] hover:bg-blue-50 rounded-lg transition-colors cursor-pointer"
               >
                 {link.label}
               </a>

@@ -8,7 +8,7 @@ const steps = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
       </svg>
     ),
-    color: 'bg-[#146EB4]',
+    color: 'bg-[#0993d9]',
   },
   {
     number: '02',
@@ -30,7 +30,7 @@ const steps = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
       </svg>
     ),
-    color: 'bg-[#146EB4]',
+    color: 'bg-[#0993d9]',
   },
   {
     number: '04',
@@ -51,7 +51,7 @@ export default function HowItWorks() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center space-y-3 mb-14">
-          <div className="inline-block bg-[#146EB4]/10 text-[#146EB4] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+          <div className="inline-block bg-[#0993d9]/10 text-[#0993d9] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
             How It Works
           </div>
           <h2 className="text-3xl lg:text-4xl font-extrabold text-[#111827]">
@@ -65,7 +65,7 @@ export default function HowItWorks() {
         {/* Steps */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 relative">
           {/* Connector line (desktop only) */}
-          <div className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-[#146EB4] via-[#FF9900] to-[#146EB4] opacity-20 z-0" />
+          <div className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-[#0993d9] via-[#FF9900] to-[#0993d9] opacity-20 z-0" />
 
           {steps.map((step, i) => (
             <div key={step.number} className="relative z-10 flex flex-col items-center text-center space-y-4">

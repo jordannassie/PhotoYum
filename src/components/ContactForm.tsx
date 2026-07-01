@@ -86,7 +86,7 @@ export default function ContactForm() {
           {/* Left: copy */}
           <div className="space-y-6 lg:sticky lg:top-24">
             <div className="space-y-3">
-              <div className="inline-block bg-[#146EB4]/10 text-[#146EB4] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+              <div className="inline-block bg-[#0993d9]/10 text-[#0993d9] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
                 Get Started
               </div>
               <h2 className="text-3xl lg:text-4xl font-extrabold text-[#111827] leading-tight">
@@ -140,7 +140,7 @@ export default function ContactForm() {
                       onChange={set('name')}
                       placeholder="Jane Smith"
                       required
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#146EB4]/30 focus:border-[#146EB4] transition"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition"
                     />
                   </div>
                   <div className="space-y-1.5">
@@ -153,7 +153,7 @@ export default function ContactForm() {
                       onChange={set('email')}
                       placeholder="jane@brand.com"
                       required
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#146EB4]/30 focus:border-[#146EB4] transition"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition"
                     />
                   </div>
                 </div>
@@ -166,7 +166,7 @@ export default function ContactForm() {
                     value={fields.brand_name}
                     onChange={set('brand_name')}
                     placeholder="Your brand name"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#146EB4]/30 focus:border-[#146EB4] transition"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition"
                   />
                 </div>
 
@@ -178,7 +178,7 @@ export default function ContactForm() {
                     value={fields.product_url}
                     onChange={set('product_url')}
                     placeholder="https://amazon.com/dp/..."
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#146EB4]/30 focus:border-[#146EB4] transition"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition"
                   />
                 </div>
 
@@ -190,7 +190,7 @@ export default function ContactForm() {
                     value={fields.product_photo_url}
                     onChange={set('product_photo_url')}
                     placeholder="Paste Dropbox, Google Drive, Amazon image, or website link"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#146EB4]/30 focus:border-[#146EB4] transition"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition"
                   />
                 </div>
 
@@ -201,7 +201,7 @@ export default function ContactForm() {
                     <select
                       value={fields.product_count}
                       onChange={set('product_count')}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#146EB4]/30 focus:border-[#146EB4] transition bg-white"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition bg-white"
                     >
                       <option value="">Select...</option>
                       {PRODUCT_COUNT_OPTIONS.map((o) => (
@@ -214,7 +214,7 @@ export default function ContactForm() {
                     <select
                       value={fields.budget_option}
                       onChange={set('budget_option')}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#146EB4]/30 focus:border-[#146EB4] transition bg-white"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition bg-white"
                     >
                       <option value="">Select...</option>
                       {BUDGET_OPTIONS.map((o) => (
@@ -232,7 +232,7 @@ export default function ContactForm() {
                     onChange={set('improvement_notes')}
                     rows={3}
                     placeholder="Describe your current images and what you'd like changed or improved..."
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#146EB4]/30 focus:border-[#146EB4] transition resize-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition resize-none"
                   />
                 </div>
 

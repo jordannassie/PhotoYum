@@ -48,7 +48,7 @@ export default function Pricing() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center space-y-3 mb-12">
-          <div className="inline-block bg-[#146EB4]/10 text-[#146EB4] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+          <div className="inline-block bg-[#0993d9]/10 text-[#0993d9] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
             Pricing
           </div>
           <h2 className="text-3xl lg:text-4xl font-extrabold text-[#111827]">
@@ -71,7 +71,7 @@ export default function Pricing() {
               }`}
             >
               {plan.highlight && (
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FF9900] to-[#146EB4]" />
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FF9900] to-[#0993d9]" />
               )}
 
               <div className="mb-5">
@@ -88,7 +88,7 @@ export default function Pricing() {
               <ul className="space-y-3 mb-6 flex-1">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-center gap-2.5 text-sm text-gray-700">
-                    <svg className="w-4 h-4 text-[#146EB4] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4 text-[#0993d9] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                     {f}
@@ -101,7 +101,7 @@ export default function Pricing() {
                 className={`w-full py-3 rounded-xl font-bold text-sm transition-all ${
                   plan.highlight
                     ? 'bg-[#FF9900] hover:bg-[#e68900] text-white shadow-md'
-                    : 'bg-white border-2 border-[#146EB4] text-[#146EB4] hover:bg-[#146EB4]/5'
+                    : 'bg-white border-2 border-[#0993d9] text-[#0993d9] hover:bg-[#0993d9]/5'
                 }`}
               >
                 {plan.cta}
@@ -117,14 +117,14 @@ export default function Pricing() {
         {/* Bulk note */}
         <div className="text-center mt-8">
           <div className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-5 py-3 shadow-sm">
-            <svg className="w-4 h-4 text-[#146EB4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-[#0993d9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
             <span className="text-sm text-gray-600">
               Need multiple products?{' '}
               <button
                 onClick={scrollToForm}
-                className="text-[#146EB4] font-semibold hover:underline"
+                className="text-[#0993d9] font-semibold hover:underline"
               >
                 Contact us for bulk pricing →
               </button>
