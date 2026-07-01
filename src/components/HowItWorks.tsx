@@ -116,7 +116,7 @@ export default function HowItWorks() {
 
               {/* Number badge — sits above the card */}
               <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
-                <div className={`${step.accent} text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-extrabold shadow-lg border-[3px] border-white`}>
+                <div className="bg-[#1476ff] text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-extrabold shadow-lg border-[3px] border-white">
                   {i + 1}
                 </div>
               </div>
