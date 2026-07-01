@@ -150,21 +150,6 @@ export default function HowItWorks() {
           ))}
         </div>
 
-        {/* Trust strip */}
-        <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {trustItems.map((item) => (
-            <div key={item.title} className="bg-white rounded-2xl border border-gray-100 shadow-sm px-5 py-4 flex items-start gap-3">
-              <div className="w-9 h-9 rounded-xl bg-[#1476ff]/10 text-[#1476ff] flex items-center justify-center flex-shrink-0">
-                {item.icon}
-              </div>
-              <div>
-                <div className="text-sm font-bold text-[#0f172a]">{item.title}</div>
-                <div className="text-xs text-gray-500 mt-0.5 leading-snug">{item.desc}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
       </div>
     </section>
   )
