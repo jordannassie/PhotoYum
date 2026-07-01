@@ -2,9 +2,9 @@
 
 import Image from 'next/image'
 
-const HERO_IMG   = 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/Hero/5daf41b8-a178-4b31-bb2c-c6fd889d0328.png'
+const HERO_IMG      = 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/Hero/5daf41b8-a178-4b31-bb2c-c6fd889d0328.png'
 const LIFESTYLE_IMG = 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/Hero/5fee06ca-257e-42dd-b078-9d6ac3fdfbe5.png'
-const INFO_IMG   = 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/Hero/503de020-704b-46a2-9a39-6897310a4cb6.png'
+const INFO_IMG      = 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/Hero/503de020-704b-46a2-9a39-6897310a4cb6.png'
 
 const trustBullets = [
   { text: '72-hour delivery' },
@@ -12,6 +12,15 @@ const trustBullets = [
   { text: 'Conversion-focused' },
   { text: 'No studio shoot needed' },
 ]
+
+function Label({ color, text }: { color: string; text: string }) {
+  return (
+    <div className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 bg-black/55 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+      <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${color}`} />
+      {text}
+    </div>
+  )
+}
 
 export default function Hero() {
   const scrollToForm = () => {
@@ -22,12 +31,12 @@ export default function Hero() {
   }
 
   return (
-    <section id="hero" className="bg-white min-h-screen flex items-center">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <section id="hero" className="bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 w-full">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
 
           {/* ── Left: copy ── */}
-          <div className="space-y-8">
+          <div className="space-y-8 z-10">
             <div className="inline-flex items-center gap-2 bg-[#1476ff]/10 text-[#1476ff] text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
               <span className="w-1.5 h-1.5 rounded-full bg-[#FF9900] inline-block" />
               Amazon Product Images in 72 Hours
@@ -82,55 +91,65 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ── Right: real product images ── */}
-          <div className="relative flex items-center justify-center lg:justify-end select-none">
-            <div className="relative w-full max-w-[420px]">
+          {/* ── Right: premium overlapping image cluster ── */}
+          <div className="relative select-none flex justify-center lg:justify-end">
 
-              {/* Main hero image */}
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-gray-50">
+            {/* Outer container — controls visible area, prevents overflow */}
+            <div className="relative w-full max-w-[640px] h-[480px] sm:h-[520px] lg:h-[560px]">
+
+              {/* Background glow */}
+              <div className="absolute inset-8 rounded-full bg-orange-100/50 blur-3xl opacity-70 pointer-events-none" />
+
+              {/* ── Main product card ── */}
+              <div
+                className="absolute z-10 rounded-[28px] overflow-hidden shadow-2xl border border-gray-100/80 bg-white"
+                style={{ right: 20, top: 60, width: 'min(82%, 480px)' }}
+              >
                 <Image
                   src={HERO_IMG}
-                  alt="Hero product image"
-                  width={840}
-                  height={840}
+                  alt="Hero product shot"
+                  width={960}
+                  height={960}
                   className="w-full h-auto object-cover"
                   priority
                   unoptimized
                 />
-                {/* Label pill */}
-                <div className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF9900]" />
-                  Hero Image
-                </div>
+                <Label color="bg-[#FF9900]" text="Hero Image" />
               </div>
 
-              {/* Floating lifestyle card — top right */}
-              <div className="absolute -top-5 -right-5 lg:-right-10 w-36 rounded-2xl overflow-hidden shadow-xl border-2 border-white bg-white">
-                <Image
-                  src={LIFESTYLE_IMG}
-                  alt="Lifestyle image"
-                  width={280}
-                  height={280}
-                  className="w-full h-auto object-cover"
-                  unoptimized
-                />
-                <div className="px-2 py-1.5 bg-white">
-                  <span className="text-[9px] font-bold text-gray-600 uppercase tracking-wide">Lifestyle Image</span>
-                </div>
-              </div>
-
-              {/* Floating infographic card — bottom left */}
-              <div className="absolute -bottom-5 -left-5 lg:-left-10 w-40 rounded-2xl overflow-hidden shadow-xl border-2 border-white bg-white">
+              {/* ── Infographic card — bottom left overlapping main ── */}
+              <div
+                className="absolute z-20 rounded-[22px] overflow-hidden shadow-2xl border-[3px] border-white bg-white"
+                style={{ left: 0, bottom: 20, width: 'min(40%, 220px)' }}
+              >
                 <Image
                   src={INFO_IMG}
                   alt="Infographic image"
-                  width={320}
-                  height={320}
+                  width={440}
+                  height={440}
                   className="w-full h-auto object-cover"
                   unoptimized
                 />
-                <div className="px-2 py-1.5 bg-white">
-                  <span className="text-[9px] font-bold text-gray-600 uppercase tracking-wide">Infographic Image</span>
+                <div className="px-2.5 py-1.5 bg-white">
+                  <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">Infographic</span>
+                </div>
+              </div>
+
+              {/* ── Lifestyle card — top right overlapping main ── */}
+              <div
+                className="absolute z-30 rounded-[22px] overflow-hidden shadow-2xl border-[3px] border-white bg-white"
+                style={{ right: 0, top: 10, width: 'min(35%, 200px)' }}
+              >
+                <Image
+                  src={LIFESTYLE_IMG}
+                  alt="Lifestyle image"
+                  width={400}
+                  height={400}
+                  className="w-full h-auto object-cover"
+                  unoptimized
+                />
+                <div className="px-2.5 py-1.5 bg-white">
+                  <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">Lifestyle</span>
                 </div>
               </div>
 
