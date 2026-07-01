@@ -39,10 +39,10 @@ export default function Header() {
             className="flex-shrink-0"
           >
             <Image
-              src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/Logo%20PhotoYum.jpg"
+              src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/Logo-PhotoYum-black.png"
               alt="PhotoYum"
-              width={140}
-              height={40}
+              width={160}
+              height={44}
               className="h-9 w-auto object-contain"
               priority
             />

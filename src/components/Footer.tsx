@@ -25,11 +25,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="space-y-4 lg:col-span-2">
             <Image
-              src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/Logo%20PhotoYum.jpg"
+              src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/Logo-PhotoYum-white.png"
               alt="PhotoYum"
-              width={130}
-              height={38}
-              className="h-8 w-auto object-contain brightness-0 invert"
+              width={160}
+              height={44}
+              className="h-8 w-auto object-contain"
             />
             <p className="text-sm text-gray-400 max-w-xs leading-relaxed">
               Premium Amazon product images that drive clicks and sales.
