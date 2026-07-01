@@ -127,6 +127,53 @@ export default function Pricing() {
             </span>
           </div>
         </div>
+
+        {/* Add-ons */}
+        <div className="max-w-3xl mx-auto mt-14">
+          <div className="text-center mb-6">
+            <h3 className="text-xl font-bold text-[#111827]">Need more images or videos?</h3>
+            <p className="text-sm text-gray-500 mt-1">Add extra assets to any package.</p>
+          </div>
+
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+            <div className="divide-y divide-gray-100">
+              {[
+                { label: 'Extra lifestyle image',           price: '$75',  unit: 'each' },
+                { label: 'Extra infographic image',         price: '$150', unit: 'each' },
+                { label: 'Extra hero image variation',      price: '$100', unit: 'each' },
+                { label: 'Extra product showcase video',    price: '$200', unit: 'each' },
+                { label: 'Rush delivery',                   price: '+$150', unit: null },
+                { label: 'Additional revision round',       price: '$75',  unit: null },
+              ].map(({ label, price, unit }) => (
+                <div key={label} className="flex items-center justify-between px-6 py-3.5">
+                  <div className="flex items-center gap-2.5">
+                    <svg className="w-3.5 h-3.5 text-[#1476ff] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-gray-700">{label}</span>
+                  </div>
+                  <div className="text-sm font-semibold text-[#111827] tabular-nums">
+                    {price}{unit && <span className="text-xs font-normal text-gray-400 ml-1">{unit}</span>}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <p className="text-xs text-gray-500">Add-ons are applied at checkout after submitting your product.</p>
+              <button
+                onClick={scrollToForm}
+                className="flex-shrink-0 inline-flex items-center gap-1.5 border border-[#1476ff] text-[#1476ff] hover:bg-[#1476ff]/5 font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors"
+              >
+                Customize My Package
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   )
