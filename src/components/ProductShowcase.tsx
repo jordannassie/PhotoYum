@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { supabase } from '@/lib/supabaseClient'
+import { getSupabase } from '@/lib/supabaseClient'
 
 const BUCKET = 'Storage'
 const FOLDER = 'Products'
@@ -16,36 +16,57 @@ function isImage(name: string): boolean {
 export default function ProductShowcase() {
   const [images, setImages] = useState<string[]>([])
   const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading')
+  const [errorDetail, setErrorDetail] = useState('')
   const [lightbox, setLightbox] = useState<string | null>(null)
 
-  useEffect(() => {
-    async function fetchImages() {
-      try {
-        const { data, error } = await supabase.storage
-          .from(BUCKET)
-          .list(FOLDER, { limit: 200, sortBy: { column: 'created_at', order: 'desc' } })
+  const fetchImages = async () => {
+    setStatus('loading')
+    setErrorDetail('')
+    try {
+      const client = getSupabase()
 
-        if (error) throw error
+      const { data, error } = await client.storage
+        .from(BUCKET)
+        .list(FOLDER, { limit: 200, sortBy: { column: 'name', order: 'asc' } })
 
-        const urls = (data ?? [])
-          .filter((f) => f.name && isImage(f.name))
-          .map((f) => {
-            const { data: urlData } = supabase.storage
-              .from(BUCKET)
-              .getPublicUrl(`${FOLDER}/${f.name}`)
-            return urlData.publicUrl
-          })
-
-        setImages(urls)
-        setStatus('loaded')
-      } catch (err) {
-        console.error('Failed to load product images:', err)
+      if (error) {
+        console.error('[ProductShowcase] Storage list error:', error)
+        setErrorDetail(error.message)
         setStatus('error')
+        return
       }
-    }
 
-    fetchImages()
-  }, [])
+      if (!data || data.length === 0) {
+        // List returned empty — likely missing storage SELECT policy for anon
+        console.warn(
+          '[ProductShowcase] Storage list returned empty. ' +
+          'If files exist in Supabase, run this SQL in Supabase SQL Editor:\n\n' +
+          'CREATE POLICY "Allow anon to list Storage objects"\n' +
+          'ON storage.objects FOR SELECT TO anon\n' +
+          "USING (bucket_id = 'Storage');\n"
+        )
+      }
+
+      const urls = (data ?? [])
+        .filter((f) => f.name && !f.name.startsWith('.') && isImage(f.name))
+        .map((f) => {
+          const { data: urlData } = client.storage
+            .from(BUCKET)
+            .getPublicUrl(`${FOLDER}/${f.name}`)
+          return urlData.publicUrl
+        })
+
+      setImages(urls)
+      setStatus('loaded')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err)
+      console.error('[ProductShowcase] Unexpected error:', msg)
+      setErrorDetail(msg)
+      setStatus('error')
+    }
+  }
+
+  useEffect(() => { fetchImages() }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <section id="examples" className="bg-white py-20 lg:py-28">
@@ -65,43 +86,61 @@ export default function ProductShowcase() {
           </p>
         </div>
 
-        {/* Loading */}
+        {/* Loading skeleton */}
         {status === 'loading' && (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div
-                key={i}
-                className="aspect-square rounded-2xl bg-gray-100 animate-pulse"
-              />
+              <div key={i} className="aspect-square rounded-2xl bg-gray-100 animate-pulse" />
             ))}
           </div>
         )}
 
         {/* Error */}
         {status === 'error' && (
-          <div className="text-center py-16">
-            <div className="w-14 h-14 rounded-full bg-red-50 text-red-400 flex items-center justify-center mx-auto mb-4">
+          <div className="text-center py-16 space-y-4">
+            <div className="w-14 h-14 rounded-full bg-red-50 text-red-400 flex items-center justify-center mx-auto">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <p className="text-sm text-gray-500">Could not load images. Please try refreshing.</p>
+            <p className="text-sm text-gray-500">Could not load images. Please try again.</p>
+            {errorDetail && (
+              <p className="text-xs text-red-400 font-mono max-w-sm mx-auto">{errorDetail}</p>
+            )}
+            <button
+              onClick={fetchImages}
+              className="inline-flex items-center gap-1.5 text-sm text-[#146EB4] font-semibold hover:underline"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Try again
+            </button>
           </div>
         )}
 
         {/* Empty */}
         {status === 'loaded' && images.length === 0 && (
-          <div className="text-center py-16">
-            <div className="w-14 h-14 rounded-full bg-[#146EB4]/10 text-[#146EB4] flex items-center justify-center mx-auto mb-4">
+          <div className="text-center py-16 space-y-3">
+            <div className="w-14 h-14 rounded-full bg-[#146EB4]/10 text-[#146EB4] flex items-center justify-center mx-auto">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
             <p className="text-sm text-gray-500">No product images yet. Check back soon.</p>
+            <button
+              onClick={fetchImages}
+              className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#146EB4] transition-colors"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Refresh
+            </button>
           </div>
         )}
 
-        {/* Grid */}
+        {/* Masonry grid */}
         {status === 'loaded' && images.length > 0 && (
           <div className="columns-2 sm:columns-3 lg:columns-4 gap-4 space-y-4">
             {images.map((url, i) => (
@@ -133,7 +172,7 @@ export default function ProductShowcase() {
           </div>
         )}
 
-        {/* CTA below gallery */}
+        {/* CTA */}
         {status === 'loaded' && images.length > 0 && (
           <div className="text-center mt-12">
             <button
