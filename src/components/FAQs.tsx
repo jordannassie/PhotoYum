@@ -37,7 +37,7 @@ export default function FAQs() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center space-y-3 mb-12">
-          <div className="inline-block bg-[#0993d9]/10 text-[#0993d9] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+          <div className="inline-block bg-[#1476ff]/10 text-[#1476ff] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
             FAQs
           </div>
           <h2 className="text-3xl lg:text-4xl font-extrabold text-[#111827]">
@@ -59,7 +59,7 @@ export default function FAQs() {
                 <span className="font-semibold text-[#111827] text-sm leading-snug">{faq.q}</span>
                 <span
                   className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-colors ${
-                    open === i ? 'bg-[#0993d9] text-white' : 'bg-gray-100 text-gray-500'
+                    open === i ? 'bg-[#1476ff] text-white' : 'bg-gray-100 text-gray-500'
                   }`}
                 >
                   <svg

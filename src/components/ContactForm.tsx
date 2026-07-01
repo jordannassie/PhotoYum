@@ -86,7 +86,7 @@ export default function ContactForm() {
           {/* Left: copy */}
           <div className="space-y-6 lg:sticky lg:top-24">
             <div className="space-y-3">
-              <div className="inline-block bg-[#0993d9]/10 text-[#0993d9] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+              <div className="inline-block bg-[#1476ff]/10 text-[#1476ff] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
                 Get Started
               </div>
               <h2 className="text-3xl lg:text-4xl font-extrabold text-[#111827] leading-tight">
@@ -99,13 +99,27 @@ export default function ContactForm() {
 
             <div className="space-y-3">
               {[
-                { icon: '⚡', text: 'Reply within 24 hours' },
-                { icon: '🔒', text: 'No payment needed to submit' },
-                { icon: '✅', text: 'Amazon-compliant images' },
-                { icon: '🔄', text: '2 revision rounds included' },
+                {
+                  icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+                  text: 'Reply within 24 hours',
+                },
+                {
+                  icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>,
+                  text: 'No payment needed to submit',
+                },
+                {
+                  icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+                  text: 'Amazon-compliant images',
+                },
+                {
+                  icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>,
+                  text: '1 revision round included',
+                },
               ].map((item) => (
                 <div key={item.text} className="flex items-center gap-3">
-                  <span className="text-lg">{item.icon}</span>
+                  <div className="w-7 h-7 rounded-lg bg-[#1476ff]/10 text-[#1476ff] flex items-center justify-center flex-shrink-0">
+                    {item.icon}
+                  </div>
                   <span className="text-sm font-medium text-gray-700">{item.text}</span>
                 </div>
               ))}
@@ -140,7 +154,7 @@ export default function ContactForm() {
                       onChange={set('name')}
                       placeholder="Jane Smith"
                       required
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1476ff]/30 focus:border-[#1476ff] transition"
                     />
                   </div>
                   <div className="space-y-1.5">
@@ -153,7 +167,7 @@ export default function ContactForm() {
                       onChange={set('email')}
                       placeholder="jane@brand.com"
                       required
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1476ff]/30 focus:border-[#1476ff] transition"
                     />
                   </div>
                 </div>
@@ -166,7 +180,7 @@ export default function ContactForm() {
                     value={fields.brand_name}
                     onChange={set('brand_name')}
                     placeholder="Your brand name"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1476ff]/30 focus:border-[#1476ff] transition"
                   />
                 </div>
 
@@ -178,7 +192,7 @@ export default function ContactForm() {
                     value={fields.product_url}
                     onChange={set('product_url')}
                     placeholder="https://amazon.com/dp/..."
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1476ff]/30 focus:border-[#1476ff] transition"
                   />
                 </div>
 
@@ -190,7 +204,7 @@ export default function ContactForm() {
                     value={fields.product_photo_url}
                     onChange={set('product_photo_url')}
                     placeholder="Paste Dropbox, Google Drive, Amazon image, or website link"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1476ff]/30 focus:border-[#1476ff] transition"
                   />
                 </div>
 
@@ -201,7 +215,7 @@ export default function ContactForm() {
                     <select
                       value={fields.product_count}
                       onChange={set('product_count')}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition bg-white"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#1476ff]/30 focus:border-[#1476ff] transition bg-white"
                     >
                       <option value="">Select...</option>
                       {PRODUCT_COUNT_OPTIONS.map((o) => (
@@ -214,7 +228,7 @@ export default function ContactForm() {
                     <select
                       value={fields.budget_option}
                       onChange={set('budget_option')}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition bg-white"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#1476ff]/30 focus:border-[#1476ff] transition bg-white"
                     >
                       <option value="">Select...</option>
                       {BUDGET_OPTIONS.map((o) => (
@@ -232,7 +246,7 @@ export default function ContactForm() {
                     onChange={set('improvement_notes')}
                     rows={3}
                     placeholder="Describe your current images and what you'd like changed or improved..."
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0993d9]/30 focus:border-[#0993d9] transition resize-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1476ff]/30 focus:border-[#1476ff] transition resize-none"
                   />
                 </div>
 

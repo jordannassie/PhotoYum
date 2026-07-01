@@ -17,7 +17,7 @@ function isImage(name: string): boolean {
 
 // Grid toggle icon components
 function SmallGridIcon({ active }: { active: boolean }) {
-  const color = active ? '#0993d9' : '#9CA3AF'
+  const color = active ? '#1476ff' : '#9CA3AF'
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
       {[0,1,2,3,4,5,6,7].map((i) => (
@@ -28,7 +28,7 @@ function SmallGridIcon({ active }: { active: boolean }) {
 }
 
 function LargeGridIcon({ active }: { active: boolean }) {
-  const color = active ? '#0993d9' : '#9CA3AF'
+  const color = active ? '#1476ff' : '#9CA3AF'
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
       {[0,1,2,3].map((i) => (
@@ -119,7 +119,7 @@ export default function ProductShowcase() {
                 title="Small grid (8 per row)"
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all ${
                   gridMode === 'small'
-                    ? 'bg-white text-[#0993d9] shadow-sm'
+                    ? 'bg-white text-[#1476ff] shadow-sm'
                     : 'text-gray-400 hover:text-gray-600'
                 }`}
               >
@@ -132,7 +132,7 @@ export default function ProductShowcase() {
                 title="Large grid (4 per row)"
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all ${
                   gridMode === 'large'
-                    ? 'bg-white text-[#0993d9] shadow-sm'
+                    ? 'bg-white text-[#1476ff] shadow-sm'
                     : 'text-gray-400 hover:text-gray-600'
                 }`}
               >
@@ -166,7 +166,7 @@ export default function ProductShowcase() {
             )}
             <button
               onClick={fetchImages}
-              className="inline-flex items-center gap-1.5 text-sm text-[#0993d9] font-semibold hover:underline"
+              className="inline-flex items-center gap-1.5 text-sm text-[#1476ff] font-semibold hover:underline"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -179,7 +179,7 @@ export default function ProductShowcase() {
         {/* Empty */}
         {status === 'loaded' && images.length === 0 && (
           <div className="text-center py-16 space-y-3">
-            <div className="w-14 h-14 rounded-full bg-[#0993d9]/10 text-[#0993d9] flex items-center justify-center mx-auto">
+            <div className="w-14 h-14 rounded-full bg-[#1476ff]/10 text-[#1476ff] flex items-center justify-center mx-auto">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
@@ -187,7 +187,7 @@ export default function ProductShowcase() {
             <p className="text-sm text-gray-500">No product images yet. Check back soon.</p>
             <button
               onClick={fetchImages}
-              className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#0993d9] transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#1476ff] transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -204,7 +204,7 @@ export default function ProductShowcase() {
               <button
                 key={url}
                 onClick={() => setLightbox(url)}
-                className="group aspect-square rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-150 hover:scale-[1.04] focus:outline-none focus:ring-2 focus:ring-[#0993d9] focus:ring-offset-1"
+                className="group aspect-square rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-150 hover:scale-[1.04] focus:outline-none focus:ring-2 focus:ring-[#1476ff] focus:ring-offset-1"
               >
                 <div className="relative w-full h-full bg-gray-100">
                   <Image
@@ -228,7 +228,7 @@ export default function ProductShowcase() {
               <button
                 key={url}
                 onClick={() => setLightbox(url)}
-                className="block w-full break-inside-avoid rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#0993d9] focus:ring-offset-2 group"
+                className="block w-full break-inside-avoid rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#1476ff] focus:ring-offset-2 group"
               >
                 <div className="relative bg-gray-50">
                   <Image

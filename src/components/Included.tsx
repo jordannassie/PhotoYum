@@ -34,7 +34,7 @@ const items = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
       </svg>
     ),
-    title: '2 rounds of revisions',
+    title: '1 round of revisions',
     desc: 'We refine until you\'re fully satisfied. Your feedback drives every edit.',
   },
   {
@@ -66,7 +66,7 @@ export default function Included() {
           {/* Left: text */}
           <div className="space-y-8">
             <div className="space-y-3">
-              <div className="inline-block bg-[#0993d9]/10 text-[#0993d9] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+              <div className="inline-block bg-[#1476ff]/10 text-[#1476ff] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
                 What&apos;s Included
               </div>
               <h2 className="text-3xl lg:text-4xl font-extrabold text-[#111827] leading-tight">
@@ -80,7 +80,7 @@ export default function Included() {
             <ul className="space-y-4">
               {items.map((item) => (
                 <li key={item.title} className="flex items-start gap-3.5">
-                  <div className="flex-shrink-0 mt-0.5 w-9 h-9 rounded-xl bg-[#0993d9]/10 text-[#0993d9] flex items-center justify-center">
+                  <div className="flex-shrink-0 mt-0.5 w-9 h-9 rounded-xl bg-[#1476ff]/10 text-[#1476ff] flex items-center justify-center">
                     {item.icon}
                   </div>
                   <div>
@@ -149,7 +149,7 @@ export default function Included() {
                 className="w-full h-auto object-cover"
                 unoptimized
               />
-              <span className="absolute top-2 left-2 bg-[#0993d9] text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide shadow">
+              <span className="absolute top-2 left-2 bg-[#1476ff] text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide shadow">
                 Infographic
               </span>
             </div>
