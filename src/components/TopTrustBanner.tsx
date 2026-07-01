@@ -48,15 +48,14 @@ export default function TopTrustBanner() {
               <span className="text-lg sm:text-xl lg:text-2xl font-extrabold text-white leading-tight">
                 <span className="text-[#FF9900]">#1</span> Product Photo Agency on
               </span>
-              {/* Amazon wordmark (SVG) */}
-              <span className="inline-flex items-center gap-0.5">
-                <span className="text-lg sm:text-xl lg:text-2xl font-extrabold text-white">amazon</span>
-                {/* Amazon smile arc */}
-                <svg viewBox="0 0 60 14" className="w-8 sm:w-9 h-3 text-[#FF9900] -mt-3" fill="none">
-                  <path d="M4 2 Q30 14 56 2" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-                  <polygon points="52,1 56,2 53,5" fill="currentColor"/>
-                </svg>
-              </span>
+              <Image
+                src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/Amazon-Logo-White-PNG-Image.png"
+                alt="Amazon"
+                width={90}
+                height={28}
+                className="h-6 sm:h-7 w-auto object-contain"
+                unoptimized
+              />
             </div>
             <p className="text-sm text-gray-400 font-medium">
               Amazon-ready hero, lifestyle, and infographic images.

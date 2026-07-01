@@ -55,18 +55,19 @@ export default function FooterTrustBanner() {
               <p className="text-xs font-semibold text-[#FF9900] uppercase tracking-widest">
                 Ready for better product images?
               </p>
-              <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
-                  <span className="text-[#FF9900]">#1</span> Product Photo Agency on
-                </h2>
-                <span className="inline-flex items-center gap-0.5">
-                  <span className="text-2xl sm:text-3xl font-extrabold text-white">amazon</span>
-                  <svg viewBox="0 0 60 14" className="w-9 h-3 text-[#FF9900] -mt-3" fill="none">
-                    <path d="M4 2 Q30 14 56 2" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-                    <polygon points="52,1 56,2 53,5" fill="currentColor"/>
-                  </svg>
-                </span>
-              </div>
+            <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
+                <span className="text-[#FF9900]">#1</span> Product Photo Agency on
+              </h2>
+              <Image
+                src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/Amazon-Logo-White-PNG-Image.png"
+                alt="Amazon"
+                width={110}
+                height={34}
+                className="h-7 sm:h-8 w-auto object-contain"
+                unoptimized
+              />
+            </div>
               <p className="text-gray-400 text-sm mt-1">
                 Amazon-ready hero, lifestyle, and infographic images that drive clicks and sales.
               </p>
