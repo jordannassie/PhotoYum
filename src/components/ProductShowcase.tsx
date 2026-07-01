@@ -8,9 +8,34 @@ const BUCKET = 'Storage'
 const FOLDER = 'Products'
 const IMAGE_EXTENSIONS = new Set(['png', 'jpg', 'jpeg', 'webp'])
 
+type GridMode = 'small' | 'large'
+
 function isImage(name: string): boolean {
   const ext = name.split('.').pop()?.toLowerCase()
   return !!ext && IMAGE_EXTENSIONS.has(ext)
+}
+
+// Grid toggle icon components
+function SmallGridIcon({ active }: { active: boolean }) {
+  const color = active ? '#146EB4' : '#9CA3AF'
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      {[0,1,2,3,4,5,6,7].map((i) => (
+        <rect key={i} x={1 + (i % 4) * 4.25} y={1 + Math.floor(i / 4) * 8.5} width="3" height="6.5" rx="0.6" fill={color} />
+      ))}
+    </svg>
+  )
+}
+
+function LargeGridIcon({ active }: { active: boolean }) {
+  const color = active ? '#146EB4' : '#9CA3AF'
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      {[0,1,2,3].map((i) => (
+        <rect key={i} x={1 + (i % 2) * 9} y={1 + Math.floor(i / 2) * 9} width="7" height="7" rx="1" fill={color} />
+      ))}
+    </svg>
+  )
 }
 
 export default function ProductShowcase() {
@@ -18,32 +43,27 @@ export default function ProductShowcase() {
   const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading')
   const [errorDetail, setErrorDetail] = useState('')
   const [lightbox, setLightbox] = useState<string | null>(null)
+  const [gridMode, setGridMode] = useState<GridMode>('small')
 
   const fetchImages = async () => {
     setStatus('loading')
     setErrorDetail('')
     try {
       const client = getSupabase()
-
       const { data, error } = await client.storage
         .from(BUCKET)
         .list(FOLDER, { limit: 200, sortBy: { column: 'name', order: 'asc' } })
 
       if (error) {
-        console.error('[ProductShowcase] Storage list error:', error)
         setErrorDetail(error.message)
         setStatus('error')
         return
       }
 
       if (!data || data.length === 0) {
-        // List returned empty — likely missing storage SELECT policy for anon
         console.warn(
-          '[ProductShowcase] Storage list returned empty. ' +
-          'If files exist in Supabase, run this SQL in Supabase SQL Editor:\n\n' +
-          'CREATE POLICY "Allow anon to list Storage objects"\n' +
-          'ON storage.objects FOR SELECT TO anon\n' +
-          "USING (bucket_id = 'Storage');\n"
+          '[ProductShowcase] list() returned empty. If files exist, run in Supabase SQL Editor:\n' +
+          "CREATE POLICY \"Allow anon to list Storage objects\" ON storage.objects FOR SELECT TO anon USING (bucket_id = 'Storage');"
         )
       }
 
@@ -60,7 +80,6 @@ export default function ProductShowcase() {
       setStatus('loaded')
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err)
-      console.error('[ProductShowcase] Unexpected error:', msg)
       setErrorDetail(msg)
       setStatus('error')
     }
@@ -68,29 +87,67 @@ export default function ProductShowcase() {
 
   useEffect(() => { fetchImages() }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Grid class definitions
+  const smallGridClass = 'grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2'
+  const largeGridClass = 'columns-2 sm:columns-3 lg:columns-4 gap-4 space-y-4'
+
   return (
     <section id="examples" className="bg-white py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Header */}
-        <div className="text-center space-y-3 mb-12">
-          <div className="inline-block bg-[#FF9900]/15 text-[#FF9900] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
-            Our Work
+        {/* Header + grid toggle */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+          <div className="space-y-3">
+            <div className="inline-block bg-[#FF9900]/15 text-[#FF9900] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+              Our Work
+            </div>
+            <h2 className="text-3xl lg:text-4xl font-extrabold text-[#111827]">
+              Product images we&apos;ve created
+            </h2>
+            <p className="text-gray-600 max-w-lg">
+              Real Amazon-ready images — hero shots, lifestyle scenes, and infographics
+              that make listings stand out.
+            </p>
           </div>
-          <h2 className="text-3xl lg:text-4xl font-extrabold text-[#111827]">
-            Product images we&apos;ve created
-          </h2>
-          <p className="text-gray-600 max-w-lg mx-auto">
-            Real Amazon-ready images — hero shots, lifestyle scenes, and infographics
-            that make listings stand out.
-          </p>
+
+          {/* Toggle — only show when images loaded */}
+          {status === 'loaded' && images.length > 0 && (
+            <div className="flex items-center gap-1 bg-gray-100 rounded-xl p-1 self-start sm:self-auto flex-shrink-0">
+              <button
+                onClick={() => setGridMode('small')}
+                aria-label="Small grid"
+                title="Small grid (8 per row)"
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all ${
+                  gridMode === 'small'
+                    ? 'bg-white text-[#146EB4] shadow-sm'
+                    : 'text-gray-400 hover:text-gray-600'
+                }`}
+              >
+                <SmallGridIcon active={gridMode === 'small'} />
+                <span>Small</span>
+              </button>
+              <button
+                onClick={() => setGridMode('large')}
+                aria-label="Large grid"
+                title="Large grid (4 per row)"
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all ${
+                  gridMode === 'large'
+                    ? 'bg-white text-[#146EB4] shadow-sm'
+                    : 'text-gray-400 hover:text-gray-600'
+                }`}
+              >
+                <LargeGridIcon active={gridMode === 'large'} />
+                <span>Large</span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Loading skeleton */}
         {status === 'loading' && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="aspect-square rounded-2xl bg-gray-100 animate-pulse" />
+          <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2">
+            {Array.from({ length: 16 }).map((_, i) => (
+              <div key={i} className="aspect-square rounded-xl bg-gray-100 animate-pulse" />
             ))}
           </div>
         )}
@@ -140,9 +197,33 @@ export default function ProductShowcase() {
           </div>
         )}
 
-        {/* Masonry grid */}
-        {status === 'loaded' && images.length > 0 && (
-          <div className="columns-2 sm:columns-3 lg:columns-4 gap-4 space-y-4">
+        {/* Small grid — default, 8 per row on desktop */}
+        {status === 'loaded' && images.length > 0 && gridMode === 'small' && (
+          <div className={smallGridClass}>
+            {images.map((url, i) => (
+              <button
+                key={url}
+                onClick={() => setLightbox(url)}
+                className="group aspect-square rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-150 hover:scale-[1.04] focus:outline-none focus:ring-2 focus:ring-[#146EB4] focus:ring-offset-1"
+              >
+                <div className="relative w-full h-full bg-gray-100">
+                  <Image
+                    src={url}
+                    alt={`PhotoYum product ${i + 1}`}
+                    fill
+                    className="object-cover group-hover:opacity-90 transition-opacity"
+                    sizes="(max-width: 640px) 25vw, (max-width: 1024px) 16vw, 12.5vw"
+                    unoptimized
+                  />
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Large grid — masonry, 4 per row on desktop */}
+        {status === 'loaded' && images.length > 0 && gridMode === 'large' && (
+          <div className={largeGridClass}>
             {images.map((url, i) => (
               <button
                 key={url}
@@ -152,7 +233,7 @@ export default function ProductShowcase() {
                 <div className="relative bg-gray-50">
                   <Image
                     src={url}
-                    alt={`PhotoYum product example ${i + 1}`}
+                    alt={`PhotoYum product ${i + 1}`}
                     width={600}
                     height={600}
                     className="w-full h-auto object-cover group-hover:opacity-95 transition-opacity"
