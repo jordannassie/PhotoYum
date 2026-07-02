@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ApertureSpinner } from '@/components/MediaLoader'
 
 const VIDEOS = [
@@ -15,6 +15,13 @@ function VideoCard({ src, index }: { src: string; index: number }) {
   const [active, setActive] = useState(false)
   const [lightbox, setLightbox] = useState(false)
   const [videoReady, setVideoReady] = useState(false)
+
+  // Fallback: force-clear the spinner after 3 s so mobile users are never stuck
+  // behind the loader if video events are delayed or blocked by the browser.
+  useEffect(() => {
+    const t = setTimeout(() => setVideoReady(true), 3000)
+    return () => clearTimeout(t)
+  }, [])
 
   const handleEnter = () => {
     setActive(true)
@@ -58,7 +65,10 @@ function VideoCard({ src, index }: { src: string; index: number }) {
           playsInline
           preload="metadata"
           className={`w-full h-full object-cover transition-opacity duration-500 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
+          onLoadedMetadata={() => setVideoReady(true)}
+          onLoadedData={() => setVideoReady(true)}
           onCanPlay={() => setVideoReady(true)}
+          onError={() => setVideoReady(true)}
         />
 
         {/* Loading spinner — shown until video is ready */}
@@ -114,6 +124,7 @@ function VideoCard({ src, index }: { src: string; index: number }) {
               src={src}
               controls
               autoPlay
+              muted
               loop
               playsInline
               className="w-full h-auto max-h-[88vh] rounded-2xl shadow-2xl"

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import NextImage, { ImageProps } from 'next/image'
 
 /* ─── Aperture spinner ─── */
@@ -102,13 +102,22 @@ export function VideoWithLoader({
 }) {
   const [loaded, setLoaded] = useState(false)
 
+  // Fallback timeout so the loader never gets stuck on mobile
+  useEffect(() => {
+    const t = setTimeout(() => setLoaded(true), 3000)
+    return () => clearTimeout(t)
+  }, [])
+
   return (
     <div className={`relative overflow-hidden ${rounded} ${containerClassName}`}>
       {!loaded && <MediaSkeleton dark={dark} rounded={rounded} />}
       <video
         src={src}
         className={`${className} transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+        onLoadedMetadata={() => setLoaded(true)}
+        onLoadedData={() => setLoaded(true)}
         onCanPlay={() => setLoaded(true)}
+        onError={() => setLoaded(true)}
         {...videoProps}
       />
     </div>

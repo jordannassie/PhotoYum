@@ -15,7 +15,7 @@ const stores = [
   },
   {
     name: 'Shopify',
-    img: 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/shopify.png',
+    img: 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/Shopify_logo.svg',
     imgH: 28,
     imgW: 100,
   },
