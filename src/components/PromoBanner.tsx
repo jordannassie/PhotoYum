@@ -60,7 +60,7 @@ export default function PromoBanner() {
             <svg className="w-3.5 h-3.5 text-white/40 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span className="text-white/50 text-[11px] hidden sm:inline whitespace-nowrap">Offer resets in:</span>
+            <span className="text-white/50 text-[11px] hidden sm:inline whitespace-nowrap">Offer expires in:</span>
             <span className="text-white font-mono text-[12px] font-bold tabular-nums whitespace-nowrap">
               {time.d}d {pad(time.h)}h {pad(time.m)}m {pad(time.s)}s
             </span>
