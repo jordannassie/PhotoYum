@@ -126,10 +126,10 @@ export default function ContactForm() {
                 Get Started
               </div>
               <h2 className="text-3xl lg:text-4xl font-extrabold text-[#111827] leading-tight">
-                Ready to refresh<br />your Amazon listing?
+                Ready to refresh<br />your product images?
               </h2>
               <p className="text-gray-600 leading-relaxed">
-                Submit your product details and we&apos;ll reply within 24 hours. No payment required to submit.
+                Submit your product details and we&apos;ll reply within 24 hours. No payment required to get started.
               </p>
             </div>
 
@@ -164,6 +164,21 @@ export default function ContactForm() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
+
+                {/* Trust header */}
+                <div className="bg-[#1476ff]/6 border border-[#1476ff]/15 rounded-xl px-4 py-3.5 flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#1476ff]/10 text-[#1476ff] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-[#1476ff]">Get a reply within 24 hours</p>
+                    <p className="text-xs text-gray-500 mt-0.5">Submit your product details — no payment required to get started.</p>
+                  </div>
+                </div>
+
+                <div className="border-t border-gray-100" />
 
                 {/* Name + Phone */}
                 <div className="grid sm:grid-cols-2 gap-4">
