@@ -30,6 +30,8 @@ type Fields = {
   improvement_notes: string
 }
 
+type CouponStatus = 'idle' | 'applied' | 'error' | 'empty'
+
 export default function ContactForm() {
   const [formState, setFormState] = useState<FormState>('idle')
   const [errorMsg, setErrorMsg] = useState('')
@@ -44,6 +46,26 @@ export default function ContactForm() {
     package_interest: '',
     improvement_notes: '',
   })
+
+  // Coupon state
+  const [couponInput, setCouponInput]   = useState('')
+  const [couponStatus, setCouponStatus] = useState<CouponStatus>('idle')
+  const [appliedCode, setAppliedCode]   = useState<string | null>(null)
+  const [discount, setDiscount]         = useState(0)
+
+  const applyCode = () => {
+    const trimmed = couponInput.trim().toUpperCase()
+    if (!trimmed) { setCouponStatus('empty'); return }
+    if (trimmed === 'YUM10') {
+      setCouponStatus('applied')
+      setAppliedCode('YUM10')
+      setDiscount(10)
+    } else {
+      setCouponStatus('error')
+      setAppliedCode(null)
+      setDiscount(0)
+    }
+  }
 
   const set = (key: keyof Fields) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -62,7 +84,12 @@ export default function ContactForm() {
       const res = await fetch('/api/leads/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ source: 'form', ...fields }),
+        body: JSON.stringify({
+          source: 'form',
+          ...fields,
+          coupon_code:     appliedCode,
+          coupon_discount: discount,
+        }),
       })
       const json = await res.json()
       if (!res.ok) {
@@ -189,6 +216,63 @@ export default function ContactForm() {
                 <div className="space-y-1.5">
                   <label className="block text-sm font-semibold text-gray-700">What do you want improved?</label>
                   <textarea value={fields.improvement_notes} onChange={set('improvement_notes')} rows={3} placeholder="Describe your current images and what you'd like changed or improved..." className={inputClass + ' resize-none'} />
+                </div>
+
+                {/* ── Coupon code ── */}
+                <div className="space-y-1.5">
+                  <label className="block text-sm font-semibold text-gray-700">Coupon Code</label>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={couponInput}
+                      onChange={(e) => {
+                        setCouponInput(e.target.value)
+                        if (couponStatus !== 'idle') setCouponStatus('idle')
+                      }}
+                      onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), applyCode())}
+                      placeholder="Enter discount code"
+                      disabled={couponStatus === 'applied'}
+                      className={`flex-1 px-3.5 py-2.5 rounded-xl border text-sm text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-2 transition bg-white disabled:bg-gray-50 disabled:cursor-not-allowed ${
+                        couponStatus === 'applied'
+                          ? 'border-[#16A34A] focus:ring-[#16A34A]/20 focus:border-[#16A34A]'
+                          : couponStatus === 'error'
+                          ? 'border-[#DC2626] focus:ring-[#DC2626]/20 focus:border-[#DC2626]'
+                          : 'border-gray-200 focus:ring-[#1476ff]/30 focus:border-[#1476ff]'
+                      }`}
+                    />
+                    {couponStatus !== 'applied' ? (
+                      <button
+                        type="button"
+                        onClick={applyCode}
+                        className="px-4 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-sm font-semibold text-gray-700 transition-colors flex-shrink-0"
+                      >
+                        Apply
+                      </button>
+                    ) : (
+                      <div className="px-4 py-2.5 rounded-xl bg-[#16A34A]/10 text-[#16A34A] text-sm font-semibold flex items-center gap-1.5 flex-shrink-0">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                        </svg>
+                        Applied
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Feedback messages */}
+                  {couponStatus === 'applied' && (
+                    <div className="flex items-center gap-1.5 text-sm text-[#16A34A] font-medium">
+                      <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>YUM10 applied — you saved 10%!</span>
+                    </div>
+                  )}
+                  {couponStatus === 'error' && (
+                    <p className="text-sm text-[#DC2626]">Invalid code. Try <strong>YUM10</strong>.</p>
+                  )}
+                  {couponStatus === 'empty' && (
+                    <p className="text-sm text-gray-500">Enter a coupon code.</p>
+                  )}
                 </div>
 
                 {errorMsg && (

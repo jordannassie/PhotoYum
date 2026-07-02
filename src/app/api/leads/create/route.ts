@@ -41,6 +41,8 @@ export async function POST(request: Request) {
       package_interest,
       improvement_notes,
       chat_transcript,
+      coupon_code,
+      coupon_discount,
     } = body
 
     if (!name?.trim()) {
@@ -67,6 +69,8 @@ export async function POST(request: Request) {
       package_interest: package_interest || null,
       improvement_notes: improvement_notes?.trim() || null,
       chat_transcript: chat_transcript || null,
+      coupon_code: coupon_code || null,
+      coupon_discount: typeof coupon_discount === 'number' ? coupon_discount : null,
       status: 'new',
     }
 

@@ -1,4 +1,5 @@
 import Header from '@/components/Header'
+import PromoBanner from '@/components/PromoBanner'
 import TopTrustBanner from '@/components/TopTrustBanner'
 import Hero from '@/components/Hero'
 import Stats from '@/components/Stats'
@@ -18,6 +19,7 @@ export default function Home() {
     <>
       <Header />
       <main>
+        <PromoBanner />
         <TopTrustBanner />
         <Hero />
         <Stats />

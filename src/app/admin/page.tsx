@@ -20,6 +20,8 @@ interface Lead {
   package_interest: string | null
   improvement_notes: string | null
   chat_transcript: string | null
+  coupon_code: string | null
+  coupon_discount: number | null
   status: Status
   admin_notes: string | null
   last_followed_up_at: string | null
@@ -226,13 +228,15 @@ function LeadCard({
               { label: 'Brand', value: lead.brand_name },
               { label: 'Product Count', value: lead.product_count },
               { label: 'Package Interest', value: lead.package_interest },
+              { label: 'Coupon Code', value: lead.coupon_code || 'None' },
+              { label: 'Discount', value: lead.coupon_code ? `${lead.coupon_discount}%` : null },
               { label: 'Source', value: lead.source },
               { label: 'Submitted', value: formatDate(lead.created_at) },
               { label: 'Last Followed Up', value: lead.last_followed_up_at ? formatDate(lead.last_followed_up_at) : '—' },
             ].map(({ label, value }) => value && (
               <div key={label}>
                 <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-0.5">{label}</div>
-                <div className="text-sm text-[#111827]">{value}</div>
+                <div className={`text-sm ${label === 'Coupon Code' && lead.coupon_code ? 'text-[#16A34A] font-bold' : 'text-[#111827]'}`}>{value}</div>
               </div>
             ))}
           </div>

@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 export default function TopTrustBanner() {
   return (
-    <section className="relative overflow-hidden bg-[#0a0f1a] border-b border-white/10 mt-16">
+    <section className="relative overflow-hidden bg-[#0a0f1a] border-b border-white/10">
       {/* Ambient glow layers */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -left-32 top-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-[#FF9900]/15 blur-[90px]" />
