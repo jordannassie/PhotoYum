@@ -3,6 +3,7 @@ import PromoBanner from '@/components/PromoBanner'
 import TopTrustBanner from '@/components/TopTrustBanner'
 import Hero from '@/components/Hero'
 import TrustStrip from '@/components/TrustStrip'
+import AIBlock from '@/components/AIBlock'
 import Stats from '@/components/Stats'
 import Included from '@/components/Included'
 import ProductShowcase from '@/components/ProductShowcase'
@@ -25,6 +26,7 @@ export default function Home() {
         <TopTrustBanner />
         <Hero />
         <TrustStrip />
+        <AIBlock />
         <Stats />
         <Included />
         <ProductShowcase />

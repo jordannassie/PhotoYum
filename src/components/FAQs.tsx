@@ -4,28 +4,52 @@ import { useState } from 'react'
 
 const faqs = [
   {
-    q: 'Do I need to ship my product?',
-    a: 'No. In most cases, you do not need to ship your product. You can upload existing product photos, packaging images, product renders, or your Amazon listing. If we need the physical product for a specific shoot, we\'ll let you know before starting.',
+    q: 'What does PhotoYum create?',
+    a: 'PhotoYum creates product photos and videos for Amazon sellers, Shopify stores, eBay sellers, websites, and ecommerce brands. Every package includes a white-background hero image, lifestyle images, and infographic images. We also create short product showcase videos.',
   },
   {
-    q: 'Is this Amazon compliant?',
-    a: 'We design with Amazon image guidelines in mind, including clean white-background hero images. Final approval is always based on Amazon\'s current rules.',
+    q: 'How much does PhotoYum cost?',
+    a: 'Product image packages start at $500 per product. The Image + Video Package (includes photos and a product video) starts at $700. Bulk discounts apply for 3+ products. Use code YUM10 for 10% off your first order.',
   },
   {
     q: 'How fast is delivery?',
-    a: 'Most image packages are delivered in 48–72 hours after we have everything needed.',
+    a: 'Most image packages are delivered within 48–72 hours after we receive your product details.',
   },
   {
-    q: 'Do you use AI?',
-    a: 'We may use AI-assisted design workflows, editing, and product scene generation. We keep the product accurate and avoid misleading claims or fake results.',
+    q: 'Do you create Amazon product images?',
+    a: 'Yes. Amazon product photography is our core service. Every package includes an Amazon-compliant white-background hero image, lifestyle images, and an infographic — up to 10 images total.',
+  },
+  {
+    q: 'Do you create Shopify and eBay images?',
+    a: 'Yes. All images are delivered in formats ready for Amazon, Shopify, eBay, websites, and ad platforms. One package covers your full ecommerce presence.',
+  },
+  {
+    q: 'Do you create product videos?',
+    a: 'Yes. We create 8–15 second product showcase videos for Amazon A+, TikTok, Instagram Reels, and ads. Videos are included in the Image + Video Package ($700) or available as an add-on from $200.',
+  },
+  {
+    q: 'Do I need to ship my product?',
+    a: 'No. In most cases, you can submit existing product photos, packaging images, product renders, or your Amazon listing URL. If we need the physical product for a specific shoot, we\'ll let you know before starting.',
+  },
+  {
+    q: 'What do I need to send you?',
+    a: 'You can send any of the following: existing product photos, a product render, packaging images, or a link to your Amazon or ecommerce listing. We handle the rest.',
+  },
+  {
+    q: 'Can I get bulk pricing for multiple products?',
+    a: 'Yes. Save 10% when ordering 3+ products and 15% for 5+ products. For 10 or more products, contact us for custom bulk pricing.',
+  },
+  {
+    q: 'Can I use coupon code YUM10?',
+    a: 'Yes. Enter YUM10 in the coupon field on the submission form to save 10% on your first order.',
+  },
+  {
+    q: 'Is this Amazon compliant?',
+    a: 'Yes. We design with Amazon image guidelines in mind, including clean white-background hero images that meet Amazon\'s main image requirements.',
   },
   {
     q: 'Do I pay now?',
-    a: 'No payment is required to submit your product. We review it first and reply with next steps.',
-  },
-  {
-    q: 'What files do I receive?',
-    a: 'You\'ll receive high-resolution images in the sizes and formats needed for Amazon, Shopify, and ads — typically JPG and PNG.',
+    a: 'No. Submit your product details for free. We review and reply within 24 hours with next steps. No payment is required to get started.',
   },
 ]
 

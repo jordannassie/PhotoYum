@@ -12,6 +12,16 @@ const footerLinks = {
   ],
 }
 
+const serviceLinks = [
+  { label: 'Amazon Product Photography', href: '/amazon-product-photography' },
+  { label: 'Amazon Listing Images',       href: '/amazon-listing-images' },
+  { label: 'Amazon Infographic Images',   href: '/amazon-infographic-images' },
+  { label: 'Ecommerce Photography',        href: '/ecommerce-product-photography' },
+  { label: 'Shopify Product Images',       href: '/shopify-product-photography' },
+  { label: 'eBay Product Images',          href: '/ebay-product-photography' },
+  { label: 'Product Videos for Amazon',   href: '/product-videos-for-amazon' },
+]
+
 /* ── Payment card badge shells ── */
 function CardBadge({ children, bg = 'bg-white', className = '' }: { children: React.ReactNode; bg?: string; className?: string }) {
   return (
@@ -118,9 +128,9 @@ export default function Footer() {
   return (
     <footer className="bg-[#111827] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
-          <div className="space-y-4 lg:col-span-2">
+          <div className="space-y-4 sm:col-span-2 lg:col-span-2">
             <Image
               src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/Logo-PhotoYum-white.png"
               alt="PhotoYum"
@@ -145,6 +155,23 @@ export default function Footer() {
                   >
                     {link.label}
                   </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Service links */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4">Services</h4>
+            <ul className="space-y-2">
+              {serviceLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-gray-300 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </a>
                 </li>
               ))}
             </ul>
