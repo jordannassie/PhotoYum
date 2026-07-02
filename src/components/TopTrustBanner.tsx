@@ -3,10 +3,6 @@
 import Image from 'next/image'
 
 export default function TopTrustBanner() {
-  const scrollToForm = () => {
-    document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
     <section className="relative overflow-hidden bg-[#0a0f1a] border-b border-white/10 mt-16">
       {/* Ambient glow layers */}
@@ -46,16 +42,8 @@ export default function TopTrustBanner() {
           <div className="flex-1 text-center sm:text-left space-y-0.5">
             <div className="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
               <span className="text-lg sm:text-xl lg:text-2xl font-extrabold text-white leading-tight">
-                <span className="text-[#FF9900]">#1</span> Product Photo Agency on
+                Simple process. Powerful results.
               </span>
-              <Image
-                src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/Amazon-Logo-White-PNG-Image.png"
-                alt="Amazon"
-                width={90}
-                height={28}
-                className="h-6 sm:h-7 w-auto object-contain"
-                unoptimized
-              />
             </div>
             <p className="text-sm text-gray-400 font-medium">
               Amazon-ready hero, lifestyle, and infographic images.
@@ -65,19 +53,24 @@ export default function TopTrustBanner() {
           {/* CTA */}
           <div className="flex-shrink-0 w-full sm:w-auto">
             <button
-              onClick={scrollToForm}
-              className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm text-white transition-all duration-200 overflow-hidden"
+              onClick={() => document.querySelector('#how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+              className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 border"
               style={{
-                background: 'linear-gradient(135deg, #FF9900 0%, #e07800 100%)',
-                boxShadow: '0 0 20px rgba(255,153,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15)',
+                background: 'transparent',
+                borderColor: '#4F6BFF',
+                color: '#4F6BFF',
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = 'rgba(79, 107, 255, 0.10)'
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = 'transparent'
               }}
             >
-              <span className="relative z-10">Submit Your Product</span>
-              <svg className="w-4 h-4 relative z-10 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span>See the Process</span>
+              <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="#4F6BFF" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-              {/* Hover shimmer */}
-              <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-200" />
             </button>
           </div>
 
