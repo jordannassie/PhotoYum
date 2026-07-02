@@ -4,38 +4,36 @@ const plans = [
   {
     badge: 'IMAGES',
     badgeColor: 'bg-[#1476ff]/10 text-[#1476ff]',
-    name: 'Product Image Package',
-    price: '$500',
+    name: 'Custom Product Image Package',
+    price: 'Starting at $500',
     sub: 'per product',
     highlight: false,
     features: [
-      '1 hero image (white background)',
-      '6–8 lifestyle / in-use images',
-      '1 infographic image',
+      'Hero product images',
+      'Lifestyle / in-use images',
+      'Infographic images',
       'Amazon, Shopify & ad-ready files',
       '48–72 hour delivery',
-      '1 revision round',
+      'Custom image mix based on your product',
     ],
     cta: 'Submit My Product',
-    note: null,
   },
   {
     badge: 'BEST VALUE',
     badgeColor: 'bg-[#FF9900] text-white',
     name: 'Image + Video Package',
-    price: '$700',
+    price: 'Starting at $700',
     sub: 'per product',
     highlight: true,
     features: [
       'Everything in Image Package',
-      '1 product showcase video',
+      'Product showcase video',
       '8–15 second premium motion',
-      'Slow pan / premium product movement',
       'Amazon A+, ads, TikTok & Reels ready',
       'Multiple formats available',
+      'Custom creative direction based on your product',
     ],
     cta: 'Submit My Product',
-    note: null,
   },
 ]
 
@@ -57,7 +55,7 @@ export default function Pricing() {
             Amazon product images made simple.
           </h2>
           <p className="text-gray-600 max-w-xl mx-auto">
-            Choose a package, submit your product details, and get premium images delivered fast.
+            Tell us what you need, upload your product details, and we&apos;ll create Amazon-ready images designed for your listing, ads, and store.
           </p>
         </div>
 
@@ -82,9 +80,9 @@ export default function Pricing() {
                   {plan.badge}
                 </span>
                 <div className="text-lg font-bold text-[#111827]">{plan.name}</div>
-                <div className="flex items-baseline gap-1.5 mt-2">
-                  <span className="text-4xl font-extrabold text-[#111827]">{plan.price}</span>
-                  <span className="text-sm text-gray-400 font-medium">{plan.sub}</span>
+                <div className="mt-2">
+                  <span className="text-3xl font-extrabold text-[#111827]">{plan.price}</span>
+                  <span className="text-sm text-gray-400 font-medium ml-1.5">{plan.sub}</span>
                 </div>
               </div>
 
