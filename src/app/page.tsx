@@ -2,7 +2,7 @@ import Header from '@/components/Header'
 import PromoBanner from '@/components/PromoBanner'
 import TopTrustBanner from '@/components/TopTrustBanner'
 import Hero from '@/components/Hero'
-import StoreTrust from '@/components/StoreTrust'
+import TrustStrip from '@/components/TrustStrip'
 import Stats from '@/components/Stats'
 import Included from '@/components/Included'
 import ProductShowcase from '@/components/ProductShowcase'
@@ -24,7 +24,7 @@ export default function Home() {
         <PromoBanner />
         <TopTrustBanner />
         <Hero />
-        <StoreTrust />
+        <TrustStrip />
         <Stats />
         <Included />
         <ProductShowcase />
