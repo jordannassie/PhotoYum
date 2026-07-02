@@ -1,6 +1,10 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
+import Image from 'next/image'
+
+const SUPPORT_AVATAR_URL =
+  'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/People/f0d2ddc5-ac2a-4cc6-bd44-a1722b77d504.png'
 
 type FormState = 'idle' | 'loading' | 'success' | 'error'
 
@@ -164,6 +168,17 @@ export default function ContactForm() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
+
+                {/* Support avatar */}
+                <div className="flex justify-center -mt-2 mb-1">
+                  <Image
+                    src={SUPPORT_AVATAR_URL}
+                    alt="PhotoYum support"
+                    width={96}
+                    height={96}
+                    className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
+                  />
+                </div>
 
                 {/* Trust header */}
                 <div className="bg-[#1476ff]/6 border border-[#1476ff]/15 rounded-xl px-4 py-3.5 flex items-start gap-3">

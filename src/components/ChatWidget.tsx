@@ -1,6 +1,10 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
+
+const SUPPORT_AVATAR_URL =
+  'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/People/f0d2ddc5-ac2a-4cc6-bd44-a1722b77d504.png'
 
 const PACKAGE_OPTIONS = [
   'Product Image Package — $500',
@@ -176,11 +180,13 @@ export default function ChatWidget() {
 
           {/* Header */}
           <div className="bg-[#1476ff] px-4 py-3 flex items-center gap-3 flex-shrink-0">
-            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-              </svg>
-            </div>
+            <Image
+              src={SUPPORT_AVATAR_URL}
+              alt="PhotoYum support"
+              width={48}
+              height={48}
+              className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md flex-shrink-0"
+            />
             <div className="flex-1">
               <div className="text-white font-bold text-sm">PhotoYum</div>
               <div className="text-white/70 text-xs">Typically replies in minutes</div>
@@ -207,11 +213,13 @@ export default function ChatWidget() {
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 {msg.role === 'bot' && (
-                  <div className="w-6 h-6 rounded-full bg-[#1476ff] flex items-center justify-center mr-2 mt-1 flex-shrink-0">
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
-                    </svg>
-                  </div>
+                  <Image
+                    src={SUPPORT_AVATAR_URL}
+                    alt="PhotoYum support"
+                    width={44}
+                    height={44}
+                    className="w-11 h-11 rounded-full object-cover shadow-sm mr-2 mt-0.5 flex-shrink-0"
+                  />
                 )}
                 <div className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed ${
                   msg.role === 'user'
