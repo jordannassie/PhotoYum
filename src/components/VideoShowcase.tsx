@@ -15,11 +15,14 @@ function VideoCard({ src, index }: { src: string; index: number }) {
   const [active, setActive] = useState(false)
   const [lightbox, setLightbox] = useState(false)
   const [videoReady, setVideoReady] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
 
-  // Fallback: force-clear the spinner after 3 s so mobile users are never stuck
-  // behind the loader if video events are delayed or blocked by the browser.
   useEffect(() => {
+    // Fallback: clear spinner after 3 s if video events never fire
     const t = setTimeout(() => setVideoReady(true), 3000)
+    // Explicitly call play() on mount — required on some mobile browsers
+    // that honour muted+playsInline but ignore the autoPlay attribute
+    videoRef.current?.play().catch(() => {})
     return () => clearTimeout(t)
   }, [])
 
@@ -32,7 +35,7 @@ function VideoCard({ src, index }: { src: string; index: number }) {
         // autoplay blocked — keep muted fallback
         if (videoRef.current) {
           videoRef.current.muted = true
-          videoRef.current.play()
+          videoRef.current.play().catch(() => {})
         }
       })
     }
@@ -44,6 +47,9 @@ function VideoCard({ src, index }: { src: string; index: number }) {
       videoRef.current.muted = true
     }
   }
+
+  // Only show the play-button overlay when the video is not yet playing
+  const showPlayBtn = !active && !isPlaying
 
   return (
     <>
@@ -60,14 +66,17 @@ function VideoCard({ src, index }: { src: string; index: number }) {
         <video
           ref={videoRef}
           src={src}
+          autoPlay
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="auto"
           className={`w-full h-full object-cover transition-opacity duration-500 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
           onLoadedMetadata={() => setVideoReady(true)}
           onLoadedData={() => setVideoReady(true)}
           onCanPlay={() => setVideoReady(true)}
+          onPlay={() => { setVideoReady(true); setIsPlaying(true) }}
+          onPause={() => setIsPlaying(false)}
           onError={() => setVideoReady(true)}
         />
 
@@ -78,8 +87,8 @@ function VideoCard({ src, index }: { src: string; index: number }) {
           </div>
         )}
 
-        {/* Play indicator overlay */}
-        <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${active ? 'opacity-0' : 'opacity-100'}`}>
+        {/* Play indicator overlay — hidden while video is playing */}
+        <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${showPlayBtn ? 'opacity-100' : 'opacity-0'}`}>
           <div className="w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center group-hover:bg-black/60 transition-colors">
             <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />
