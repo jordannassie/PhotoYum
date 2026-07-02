@@ -7,6 +7,7 @@ import Included from '@/components/Included'
 import ProductShowcase from '@/components/ProductShowcase'
 import VideoShowcase from '@/components/VideoShowcase'
 import Pricing from '@/components/Pricing'
+import BulkPricing from '@/components/BulkPricing'
 import HowItWorks from '@/components/HowItWorks'
 import ContactForm from '@/components/ContactForm'
 import FAQs from '@/components/FAQs'
@@ -27,6 +28,7 @@ export default function Home() {
         <ProductShowcase />
         <VideoShowcase />
         <Pricing />
+        <BulkPricing />
         <HowItWorks />
         <ContactForm />
         <FAQs />

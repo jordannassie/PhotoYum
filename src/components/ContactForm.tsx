@@ -6,10 +6,17 @@ type FormState = 'idle' | 'loading' | 'success' | 'error'
 
 const PRODUCT_COUNT_OPTIONS = [
   '1 product',
-  '2–3 products',
-  '4–10 products',
+  '2 products',
+  '3–4 products',
+  '5–9 products',
   '10+ products',
 ]
+
+const BULK_MESSAGES: Record<string, { text: string; color: string }> = {
+  '3–4 products': { text: 'Bulk discount available — save 10%', color: 'text-[#16A34A]' },
+  '5–9 products': { text: 'Bulk discount available — save 15%', color: 'text-[#16A34A]' },
+  '10+ products': { text: 'Custom bulk pricing available', color: 'text-[#1476ff]' },
+}
 
 const PACKAGE_OPTIONS = [
   'Product Image Package — $500',
@@ -198,10 +205,18 @@ export default function ContactForm() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="block text-sm font-semibold text-gray-700">How many products?</label>
-                    <select value={fields.product_count} onChange={set('product_count')} className={inputClass}>
+                    <select id="product-count-select" value={fields.product_count} onChange={set('product_count')} className={inputClass}>
                       <option value="">Select...</option>
                       {PRODUCT_COUNT_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
                     </select>
+                    {fields.product_count && BULK_MESSAGES[fields.product_count] && (
+                      <div className={`flex items-center gap-1.5 text-xs font-semibold ${BULK_MESSAGES[fields.product_count].color}`}>
+                        <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {BULK_MESSAGES[fields.product_count].text}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1.5">
                     <label className="block text-sm font-semibold text-gray-700">Package Interest</label>
