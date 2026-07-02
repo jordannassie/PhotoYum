@@ -46,6 +46,9 @@ export async function POST(request: Request) {
     if (!name?.trim()) {
       return NextResponse.json({ error: 'Name is required.' }, { status: 400 })
     }
+    if (!phone?.trim()) {
+      return NextResponse.json({ error: 'Phone number is required.' }, { status: 400 })
+    }
     if (!email?.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: 'A valid email is required.' }, { status: 400 })
     }

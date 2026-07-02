@@ -138,8 +138,8 @@ export default function ContactForm() {
                     <input type="text" value={fields.name} onChange={set('name')} placeholder="Jane Smith" required className={inputClass} />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-gray-700">Phone Number</label>
-                    <input type="tel" value={fields.phone} onChange={set('phone')} placeholder="+1 (555) 000-0000" className={inputClass} />
+                    <label className="block text-sm font-semibold text-gray-700">Phone Number <span className="text-red-500">*</span></label>
+                    <input type="tel" value={fields.phone} onChange={set('phone')} placeholder="+1 (555) 000-0000" required className={inputClass} />
                   </div>
                 </div>
 
