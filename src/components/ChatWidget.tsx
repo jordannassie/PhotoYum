@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 
 const SUPPORT_AVATAR_URL =
-  'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/People/f0d2ddc5-ac2a-4cc6-bd44-a1722b77d504.png'
+  'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/People/c50c40f7-9056-4db0-898b-4ee268d10e53.png'
 
 const PACKAGE_OPTIONS = [
   'Product Image Package — $500',

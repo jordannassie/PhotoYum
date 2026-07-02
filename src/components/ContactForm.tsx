@@ -4,7 +4,7 @@ import { useState, FormEvent } from 'react'
 import Image from 'next/image'
 
 const SUPPORT_AVATAR_URL =
-  'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/People/f0d2ddc5-ac2a-4cc6-bd44-a1722b77d504.png'
+  'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/People/c50c40f7-9056-4db0-898b-4ee268d10e53.png'
 
 type FormState = 'idle' | 'loading' | 'success' | 'error'
 
@@ -153,7 +153,19 @@ export default function ContactForm() {
           </div>
 
           {/* Right: form */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-7 lg:p-8">
+          <div className="relative bg-white rounded-2xl shadow-sm border border-gray-100 pt-20 sm:pt-24 px-7 pb-7 lg:px-8 lg:pb-8">
+
+            {/* Overlapping support avatar */}
+            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-10">
+              <Image
+                src={SUPPORT_AVATAR_URL}
+                alt="PhotoYum support"
+                width={128}
+                height={128}
+                className="h-32 w-32 rounded-full object-cover border-4 border-white shadow-xl"
+              />
+            </div>
+
             {formState === 'success' ? (
               <div className="text-center py-10 space-y-4">
                 <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
@@ -168,17 +180,6 @@ export default function ContactForm() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
-
-                {/* Support avatar */}
-                <div className="flex justify-center -mt-2 mb-1">
-                  <Image
-                    src={SUPPORT_AVATAR_URL}
-                    alt="PhotoYum support"
-                    width={96}
-                    height={96}
-                    className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
-                  />
-                </div>
 
                 {/* Trust header */}
                 <div className="bg-[#1476ff]/6 border border-[#1476ff]/15 rounded-xl px-4 py-3.5 flex items-start gap-3">
