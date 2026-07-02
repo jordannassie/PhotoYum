@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { getSupabase } from '@/lib/supabaseClient'
+import { ApertureSpinner } from '@/components/MediaLoader'
 
 const BUCKET = 'Storage'
 const FOLDER = 'Products'
@@ -35,6 +36,79 @@ function LargeGridIcon({ active }: { active: boolean }) {
         <rect key={i} x={1 + (i % 2) * 9} y={1 + Math.floor(i / 2) * 9} width="7" height="7" rx="1" fill={color} />
       ))}
     </svg>
+  )
+}
+
+/* ── Per-image grid card with branded loading state ── */
+function GridImage({
+  url,
+  index,
+  mode,
+  onClick,
+}: {
+  url: string
+  index: number
+  mode: GridMode
+  onClick: () => void
+}) {
+  const [loaded, setLoaded] = useState(false)
+
+  if (mode === 'small') {
+    return (
+      <button
+        onClick={onClick}
+        className="group aspect-square rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-150 hover:scale-[1.04] focus:outline-none focus:ring-2 focus:ring-[#1476ff] focus:ring-offset-1"
+      >
+        <div className="relative w-full h-full bg-gray-100">
+          {!loaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10">
+              <ApertureSpinner size="sm" />
+            </div>
+          )}
+          <Image
+            src={url}
+            alt={`PhotoYum product ${index + 1}`}
+            fill
+            className={`object-cover group-hover:opacity-90 transition-all duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            sizes="(max-width: 640px) 25vw, (max-width: 1024px) 16vw, 12.5vw"
+            unoptimized
+            onLoad={() => setLoaded(true)}
+          />
+        </div>
+      </button>
+    )
+  }
+
+  return (
+    <button
+      onClick={onClick}
+      className="block w-full break-inside-avoid rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#1476ff] focus:ring-offset-2 group"
+    >
+      <div className="relative bg-gray-50">
+        {!loaded && (
+          <div className="absolute inset-0 min-h-[200px] flex items-center justify-center bg-gray-100 z-10 rounded-2xl aspect-square">
+            <ApertureSpinner size="md" />
+          </div>
+        )}
+        <Image
+          src={url}
+          alt={`PhotoYum product ${index + 1}`}
+          width={600}
+          height={600}
+          className={`w-full h-auto object-cover group-hover:opacity-95 transition-all duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          unoptimized
+          onLoad={() => setLoaded(true)}
+        />
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm rounded-full p-2 shadow">
+            <svg className="w-4 h-4 text-[#111827]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </button>
   )
 }
 
@@ -147,7 +221,9 @@ export default function ProductShowcase() {
         {status === 'loading' && (
           <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2">
             {Array.from({ length: 16 }).map((_, i) => (
-              <div key={i} className="aspect-square rounded-xl bg-gray-100 animate-pulse" />
+              <div key={i} className="aspect-square rounded-xl bg-gray-100 animate-pulse flex items-center justify-center">
+                {i === 7 && <ApertureSpinner size="sm" />}
+              </div>
             ))}
           </div>
         )}
@@ -197,26 +273,11 @@ export default function ProductShowcase() {
           </div>
         )}
 
-        {/* Small grid — default, 8 per row on desktop */}
+        {/* Small grid — 8 per row on desktop */}
         {status === 'loaded' && images.length > 0 && gridMode === 'small' && (
           <div className={smallGridClass}>
             {images.map((url, i) => (
-              <button
-                key={url}
-                onClick={() => setLightbox(url)}
-                className="group aspect-square rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-150 hover:scale-[1.04] focus:outline-none focus:ring-2 focus:ring-[#1476ff] focus:ring-offset-1"
-              >
-                <div className="relative w-full h-full bg-gray-100">
-                  <Image
-                    src={url}
-                    alt={`PhotoYum product ${i + 1}`}
-                    fill
-                    className="object-cover group-hover:opacity-90 transition-opacity"
-                    sizes="(max-width: 640px) 25vw, (max-width: 1024px) 16vw, 12.5vw"
-                    unoptimized
-                  />
-                </div>
-              </button>
+              <GridImage key={url} url={url} index={i} mode="small" onClick={() => setLightbox(url)} />
             ))}
           </div>
         )}
@@ -225,30 +286,7 @@ export default function ProductShowcase() {
         {status === 'loaded' && images.length > 0 && gridMode === 'large' && (
           <div className={largeGridClass}>
             {images.map((url, i) => (
-              <button
-                key={url}
-                onClick={() => setLightbox(url)}
-                className="block w-full break-inside-avoid rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#1476ff] focus:ring-offset-2 group"
-              >
-                <div className="relative bg-gray-50">
-                  <Image
-                    src={url}
-                    alt={`PhotoYum product ${i + 1}`}
-                    width={600}
-                    height={600}
-                    className="w-full h-auto object-cover group-hover:opacity-95 transition-opacity"
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    unoptimized
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm rounded-full p-2 shadow">
-                      <svg className="w-4 h-4 text-[#111827]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </button>
+              <GridImage key={url} url={url} index={i} mode="large" onClick={() => setLightbox(url)} />
             ))}
           </div>
         )}

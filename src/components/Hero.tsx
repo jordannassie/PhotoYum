@@ -1,6 +1,8 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
+import { ApertureSpinner } from '@/components/MediaLoader'
 
 const HERO_IMG      = 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/Hero/5daf41b8-a178-4b31-bb2c-c6fd889d0328.png'
 const LIFESTYLE_IMG = 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/Site%20images/Hero/8243839b-a4f2-4425-be6d-c31ee53e82ca.png'
@@ -23,6 +25,10 @@ function Label({ color, text }: { color: string; text: string }) {
 }
 
 export default function Hero() {
+  const [heroLoaded, setHeroLoaded] = useState(false)
+  const [lifestyleLoaded, setLifestyleLoaded] = useState(false)
+  const [infoLoaded, setInfoLoaded] = useState(false)
+
   const scrollToForm = () => {
     document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -105,14 +111,20 @@ export default function Hero() {
                 className="absolute z-10 rounded-[28px] overflow-hidden shadow-2xl border border-gray-100/80 bg-white"
                 style={{ right: 20, top: 60, width: 'min(82%, 480px)' }}
               >
+                {!heroLoaded && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-20">
+                    <ApertureSpinner size="lg" />
+                  </div>
+                )}
                 <Image
                   src={HERO_IMG}
                   alt="Hero product shot"
                   width={960}
                   height={960}
-                  className="w-full h-auto object-cover"
+                  className={`w-full h-auto object-cover transition-opacity duration-700 ${heroLoaded ? 'opacity-100' : 'opacity-0'}`}
                   priority
                   unoptimized
+                  onLoad={() => setHeroLoaded(true)}
                 />
                 <Label color="bg-[#FF9900]" text="Hero Image" />
               </div>
@@ -122,13 +134,19 @@ export default function Hero() {
                 className="absolute z-20 rounded-[22px] overflow-hidden shadow-2xl border-[3px] border-white bg-white"
                 style={{ left: 0, bottom: 20, width: 'min(40%, 220px)' }}
               >
+                {!infoLoaded && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-20">
+                    <ApertureSpinner size="sm" />
+                  </div>
+                )}
                 <Image
                   src={INFO_IMG}
                   alt="Infographic image"
                   width={440}
                   height={440}
-                  className="w-full h-auto object-cover"
+                  className={`w-full h-auto object-cover transition-opacity duration-700 ${infoLoaded ? 'opacity-100' : 'opacity-0'}`}
                   unoptimized
+                  onLoad={() => setInfoLoaded(true)}
                 />
                 <div className="px-2.5 py-1.5 bg-white">
                   <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">Infographic</span>
@@ -140,13 +158,19 @@ export default function Hero() {
                 className="absolute z-30 rounded-[22px] overflow-hidden shadow-2xl border-[3px] border-white bg-white"
                 style={{ right: 0, top: 10, width: 'min(35%, 200px)' }}
               >
+                {!lifestyleLoaded && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-20">
+                    <ApertureSpinner size="sm" />
+                  </div>
+                )}
                 <Image
                   src={LIFESTYLE_IMG}
                   alt="Lifestyle image"
                   width={400}
                   height={400}
-                  className="w-full h-auto object-cover"
+                  className={`w-full h-auto object-cover transition-opacity duration-700 ${lifestyleLoaded ? 'opacity-100' : 'opacity-0'}`}
                   unoptimized
+                  onLoad={() => setLifestyleLoaded(true)}
                 />
                 <div className="px-2.5 py-1.5 bg-white">
                   <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">Lifestyle</span>

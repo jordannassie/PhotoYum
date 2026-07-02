@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { ApertureSpinner } from '@/components/MediaLoader'
 
 const VIDEOS = [
   'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/video/hf_20260701_185249_57e3ce14-e57c-40d9-bf9a-603e8ee7ae4e.mp4',
@@ -13,6 +14,7 @@ function VideoCard({ src, index }: { src: string; index: number }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [active, setActive] = useState(false)
   const [lightbox, setLightbox] = useState(false)
+  const [videoReady, setVideoReady] = useState(false)
 
   const handleEnter = () => {
     setActive(true)
@@ -55,8 +57,16 @@ function VideoCard({ src, index }: { src: string; index: number }) {
           muted
           playsInline
           preload="metadata"
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover transition-opacity duration-500 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
+          onCanPlay={() => setVideoReady(true)}
         />
+
+        {/* Loading spinner — shown until video is ready */}
+        {!videoReady && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-20">
+            <ApertureSpinner dark size="md" />
+          </div>
+        )}
 
         {/* Play indicator overlay */}
         <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${active ? 'opacity-0' : 'opacity-100'}`}>

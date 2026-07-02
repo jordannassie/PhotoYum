@@ -1,4 +1,8 @@
+'use client'
+
+import { useState } from 'react'
 import Image from 'next/image'
+import { ApertureSpinner } from '@/components/MediaLoader'
 
 const trustItems = [
   {
@@ -90,6 +94,51 @@ const steps = [
   },
 ]
 
+type StepDef = typeof steps[0]
+
+function StepCard({ step, index }: { step: StepDef; index: number }) {
+  const [imgLoaded, setImgLoaded] = useState(false)
+  return (
+    <div className="relative flex flex-col">
+      {/* Number badge */}
+      <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
+        <div className="bg-[#1476ff] text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-extrabold shadow-lg border-[3px] border-white">
+          {index + 1}
+        </div>
+      </div>
+      {/* Card */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col flex-1 pt-5">
+        {/* Image area with loader */}
+        <div className="relative w-full aspect-square bg-gray-50 overflow-hidden">
+          {!imgLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10">
+              <ApertureSpinner size="md" />
+            </div>
+          )}
+          <Image
+            src={step.img}
+            alt={step.title}
+            fill
+            className={`object-contain object-center p-3 transition-opacity duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            onLoad={() => setImgLoaded(true)}
+          />
+        </div>
+        {/* Text content */}
+        <div className="px-5 py-5 flex flex-col gap-2 flex-1">
+          <div className="flex items-center gap-2.5">
+            <div className={`${step.accentBg} ${step.accent} w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0`}>
+              {step.icon}
+            </div>
+            <h3 className="text-sm font-bold text-[#0f172a] leading-snug">{step.title}</h3>
+          </div>
+          <p className="text-xs text-gray-500 leading-relaxed pl-[42px]">{step.desc}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function HowItWorks() {
   return (
     <section id="how-it-works" className="bg-[#F0F4FA] py-20 lg:py-28 border-y border-gray-200/70">
@@ -112,41 +161,7 @@ export default function HowItWorks() {
         {/* Step cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-5">
           {steps.map((step, i) => (
-            <div key={i} className="relative flex flex-col">
-
-              {/* Number badge — sits above the card */}
-              <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
-                <div className="bg-[#1476ff] text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-extrabold shadow-lg border-[3px] border-white">
-                  {i + 1}
-                </div>
-              </div>
-
-              {/* Card */}
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col flex-1 pt-5">
-
-                {/* Image area */}
-                <div className="relative w-full aspect-square bg-gray-50 overflow-hidden">
-                  <Image
-                    src={step.img}
-                    alt={step.title}
-                    fill
-                    className="object-contain object-center p-3"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  />
-                </div>
-
-                {/* Text content */}
-                <div className="px-5 py-5 flex flex-col gap-2 flex-1">
-                  <div className="flex items-center gap-2.5">
-                    <div className={`${step.accentBg} ${step.accent} w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0`}>
-                      {step.icon}
-                    </div>
-                    <h3 className="text-sm font-bold text-[#0f172a] leading-snug">{step.title}</h3>
-                  </div>
-                  <p className="text-xs text-gray-500 leading-relaxed pl-[42px]">{step.desc}</p>
-                </div>
-              </div>
-            </div>
+            <StepCard key={i} step={step} index={i} />
           ))}
         </div>
 

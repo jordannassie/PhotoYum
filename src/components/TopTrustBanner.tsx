@@ -9,7 +9,6 @@ export default function TopTrustBanner() {
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -left-32 top-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-[#FF9900]/15 blur-[90px]" />
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-[#1476ff]/10 blur-[80px]" />
-        {/* Subtle dot grid */}
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
@@ -42,34 +41,31 @@ export default function TopTrustBanner() {
           <div className="flex-1 text-center sm:text-left space-y-0.5">
             <div className="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
               <span className="text-lg sm:text-xl lg:text-2xl font-extrabold text-white leading-tight">
-                Simple process. Powerful results.
+                <span className="text-[#FF9900]">#1</span> Product Photo Agency on
               </span>
+              <Image
+                src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/Amazon-Logo-White-PNG-Image.png"
+                alt="Amazon"
+                width={90}
+                height={28}
+                className="h-6 sm:h-7 w-auto object-contain"
+                unoptimized
+              />
             </div>
             <p className="text-sm text-gray-400 font-medium">
               Amazon-ready hero, lifestyle, and infographic images.
             </p>
           </div>
 
-          {/* CTA */}
+          {/* CTA — blue outline, secondary */}
           <div className="flex-shrink-0 w-full sm:w-auto">
             <button
               onClick={() => document.querySelector('#how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-              className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 border"
-              style={{
-                background: 'transparent',
-                borderColor: '#4F6BFF',
-                color: '#4F6BFF',
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.background = 'rgba(79, 107, 255, 0.10)'
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.background = 'transparent'
-              }}
+              className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 border border-[#5B5BF6] text-[#5B5BF6] bg-transparent hover:bg-[#5B5BF6]/10"
             >
               <span>See the Process</span>
-              <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="#4F6BFF" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
