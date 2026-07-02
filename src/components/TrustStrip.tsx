@@ -53,8 +53,8 @@ export default function TrustStrip() {
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 sm:gap-x-14">
 
           {stores.map((s) => (
-            <div key={s.name} className="flex flex-col items-center gap-2 group">
-              <div className="h-8 flex items-center justify-center opacity-50 group-hover:opacity-100 transition-opacity duration-200">
+            <div key={s.name} className="flex flex-col items-center gap-2">
+              <div className="h-8 flex items-center justify-center">
                 <Image
                   src={s.img}
                   alt={s.name}
@@ -64,18 +64,18 @@ export default function TrustStrip() {
                   unoptimized
                 />
               </div>
-              <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider group-hover:text-gray-600 transition-colors duration-200">
+              <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
                 {s.name}
               </span>
             </div>
           ))}
 
           {/* Websites */}
-          <div className="flex flex-col items-center gap-2 group">
-            <div className="h-8 flex items-center justify-center opacity-40 group-hover:opacity-100 transition-opacity duration-200">
+          <div className="flex flex-col items-center gap-2">
+            <div className="h-8 flex items-center justify-center">
               <GlobeIcon />
             </div>
-            <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider group-hover:text-gray-600 transition-colors duration-200">
+            <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
               Websites
             </span>
           </div>
