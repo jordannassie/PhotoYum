@@ -27,6 +27,7 @@ const PACKAGE_OPTIONS = [
   'Image + Video Package — $700',
   'I need bulk pricing',
   "I'm not sure yet",
+  'Other',
 ]
 
 type Fields = {
