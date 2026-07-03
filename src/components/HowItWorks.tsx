@@ -101,8 +101,8 @@ function StepCard({ step, index }: { step: StepDef; index: number }) {
   return (
     <div className="relative flex flex-col">
       {/* Number badge */}
-      <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
-        <div className="bg-[#1476ff] text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-extrabold shadow-lg border-[3px] border-white">
+      <div className="absolute -top-7 left-1/2 -translate-x-1/2 z-10">
+        <div className="bg-[#1476ff] text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl font-extrabold shadow-lg border-[3px] border-white">
           {index + 1}
         </div>
       </div>
