@@ -88,8 +88,8 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
-          {/* Logo */}
-          <a href="#hero" onClick={(e) => { e.preventDefault(); scrollTo('#hero') }} className="flex-shrink-0">
+          {/* Logo — always goes to home page top */}
+          <a href="/" className="flex-shrink-0">
             <Image
               src="https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/Logo-PhotoYum-black.png"
               alt="PhotoYum" width={160} height={44}
