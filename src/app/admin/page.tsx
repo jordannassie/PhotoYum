@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const LOGO = 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/Logo-PhotoYum-black.png'
 
@@ -71,7 +72,9 @@ function LoginScreen({ onLogin }: { onLogin: (key: string) => void }) {
     <div className="min-h-screen bg-[#F0F4FA] flex items-center justify-center px-4">
       <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 w-full max-w-sm">
         <div className="text-center mb-8">
-          <Image src={LOGO} alt="PhotoYum" width={140} height={36} className="mx-auto mb-4 h-9 w-auto object-contain" />
+          <Link href="/">
+            <Image src={LOGO} alt="PhotoYum" width={140} height={36} className="mx-auto mb-4 h-9 w-auto object-contain hover:opacity-75 transition-opacity" />
+          </Link>
           <h1 className="text-xl font-bold text-[#111827]">Admin Access</h1>
           <p className="text-sm text-gray-500 mt-1">Enter your access key to continue</p>
         </div>

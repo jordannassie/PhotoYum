@@ -223,6 +223,12 @@ export default function Footer() {
             >
               Terms of Service
             </button>
+            <a
+              href="/admin"
+              className="text-xs text-gray-600 hover:text-gray-400 transition-colors"
+            >
+              Admin
+            </a>
           </div>
         </div>
       </div>
