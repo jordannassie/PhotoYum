@@ -1,41 +1,20 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import Link from 'next/link'
-import { Volume2, VolumeX } from 'lucide-react'
 
 const VIDEO_URL =
   'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/video/hf_20260703_020639_3a33ca60-81fa-4171-991d-b1b9a39ba32d.mp4'
 
 export default function PhotoYumVideoSection() {
   const videoRef = useRef<HTMLVideoElement | null>(null)
-  const [soundOn, setSoundOn] = useState(false)
 
-  // React doesn't reliably set the `muted` DOM attribute via the prop,
-  // so we force it and trigger play() imperatively after mount.
   useEffect(() => {
     const v = videoRef.current
     if (!v) return
     v.muted = true
     v.play().catch(() => {})
   }, [])
-
-  const unmute = async () => {
-    const v = videoRef.current
-    if (!v) return
-    v.muted = false
-    setSoundOn(true)
-    try { await v.play() } catch {}
-  }
-
-  const mute = () => {
-    const v = videoRef.current
-    if (!v) return
-    v.muted = true
-    setSoundOn(false)
-  }
-
-  const toggleSound = () => soundOn ? mute() : unmute()
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-700 px-4 py-20 sm:px-6 lg:px-8">
@@ -63,12 +42,8 @@ export default function PhotoYumVideoSection() {
         </div>
 
         {/* Video card */}
-        <div
-          className="group relative mx-auto overflow-hidden rounded-[28px] border border-white/25 bg-white/10 p-2 shadow-2xl backdrop-blur-sm"
-          onMouseEnter={unmute}
-          onMouseLeave={mute}
-        >
-          <div className="relative overflow-hidden rounded-[22px] bg-black">
+        <div className="mx-auto overflow-hidden rounded-[28px] border border-white/25 bg-white/10 p-2 shadow-2xl backdrop-blur-sm">
+          <div className="overflow-hidden rounded-[22px] bg-black">
             <video
               ref={videoRef}
               className="aspect-video w-full object-cover"
@@ -78,22 +53,7 @@ export default function PhotoYumVideoSection() {
               muted
               playsInline
               preload="metadata"
-              onClick={toggleSound}
             />
-
-            {/* Sound pill */}
-            <button
-              type="button"
-              onClick={toggleSound}
-              className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-black/60 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-sm transition hover:bg-black/80"
-              aria-label={soundOn ? 'Mute video' : 'Unmute video'}
-            >
-              {soundOn
-                ? <Volume2 className="h-3.5 w-3.5" />
-                : <VolumeX className="h-3.5 w-3.5" />
-              }
-              {soundOn ? 'Sound On' : 'Muted'}
-            </button>
           </div>
         </div>
 
