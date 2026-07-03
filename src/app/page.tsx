@@ -4,7 +4,6 @@ import TopTrustBanner from '@/components/TopTrustBanner'
 import Hero from '@/components/Hero'
 import TrustStrip from '@/components/TrustStrip'
 import AIBlock from '@/components/AIBlock'
-import Stats from '@/components/Stats'
 import Included from '@/components/Included'
 import ProductShowcase from '@/components/ProductShowcase'
 import VideoShowcase from '@/components/VideoShowcase'
@@ -27,7 +26,6 @@ export default function Home() {
         <Hero />
         <TrustStrip />
         <AIBlock />
-        <Stats />
         <Included />
         <ProductShowcase />
         <VideoShowcase />
