@@ -4,20 +4,20 @@ const stores = [
   {
     name: 'Amazon',
     img: 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/amazon-logo-amazon-icon-transparent-free-png.webp',
-    imgH: 28,
-    imgW: 100,
+    imgH: 56,
+    imgW: 200,
   },
   {
     name: 'eBay',
     img: 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/ebay.png',
-    imgH: 28,
-    imgW: 72,
+    imgH: 56,
+    imgW: 144,
   },
   {
     name: 'Shopify',
     img: 'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/logo/Shopify_logo.svg',
-    imgH: 28,
-    imgW: 100,
+    imgH: 56,
+    imgW: 200,
   },
 ]
 
@@ -30,7 +30,7 @@ function GlobeIcon() {
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="w-7 h-7 text-[#1476ff]"
+      className="w-14 h-14 text-[#1476ff]"
       aria-hidden="true"
     >
       <circle cx="12" cy="12" r="10" />
@@ -54,13 +54,13 @@ export default function TrustStrip() {
 
           {stores.map((s) => (
             <div key={s.name} className="flex flex-col items-center gap-2">
-              <div className="h-8 flex items-center justify-center">
+              <div className="h-14 flex items-center justify-center">
                 <Image
                   src={s.img}
                   alt={s.name}
                   width={s.imgW}
                   height={s.imgH}
-                  className="h-7 w-auto object-contain"
+                  className="h-14 w-auto object-contain"
                   unoptimized
                 />
               </div>
@@ -72,7 +72,7 @@ export default function TrustStrip() {
 
           {/* Websites */}
           <div className="flex flex-col items-center gap-2">
-            <div className="h-8 flex items-center justify-center">
+            <div className="h-14 flex items-center justify-center">
               <GlobeIcon />
             </div>
             <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
