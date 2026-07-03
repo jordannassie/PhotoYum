@@ -21,20 +21,28 @@ const stores = [
   },
 ]
 
-function GlobeIcon() {
+function BrowserIcon() {
   return (
     <svg
-      viewBox="0 0 24 24"
+      viewBox="0 0 48 48"
       fill="none"
-      stroke="currentColor"
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="w-14 h-14 text-[#1476ff]"
+      className="w-14 h-14"
       aria-hidden="true"
     >
-      <circle cx="12" cy="12" r="10" />
-      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+      {/* Browser chrome */}
+      <rect x="3" y="6" width="42" height="36" rx="5" ry="5" fill="#e5e7eb" />
+      {/* Top bar */}
+      <rect x="3" y="6" width="42" height="12" rx="5" ry="5" fill="#d1d5db" />
+      {/* Bottom of top bar (square corners on bottom) */}
+      <rect x="3" y="13" width="42" height="5" fill="#d1d5db" />
+      {/* Address bar */}
+      <rect x="13" y="9.5" width="22" height="5" rx="2.5" fill="#f3f4f6" />
+      {/* Traffic lights */}
+      <circle cx="8.5" cy="12" r="2" fill="#9ca3af" />
+      {/* Page content lines */}
+      <rect x="9" y="24" width="30" height="2.5" rx="1.25" fill="#d1d5db" />
+      <rect x="9" y="30" width="22" height="2.5" rx="1.25" fill="#d1d5db" />
+      <rect x="9" y="36" width="16" height="2.5" rx="1.25" fill="#e5e7eb" />
     </svg>
   )
 }
@@ -73,7 +81,7 @@ export default function TrustStrip() {
           {/* Websites */}
           <div className="flex flex-col items-center gap-2">
             <div className="h-14 flex items-center justify-center">
-              <GlobeIcon />
+              <BrowserIcon />
             </div>
             <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
               Websites
