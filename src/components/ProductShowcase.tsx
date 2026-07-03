@@ -1,105 +1,88 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { getSupabase } from '@/lib/supabaseClient'
 import { ApertureSpinner } from '@/components/MediaLoader'
+
+// ─── constants ───────────────────────────────────────────────────────────────
 
 const BUCKET = 'Storage'
 const FOLDER = 'Products'
 const IMAGE_EXTENSIONS = new Set(['png', 'jpg', 'jpeg', 'webp'])
 
-type GridMode = 'small' | 'large'
+const VIDEOS = [
+  'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/video/hf_20260701_185249_57e3ce14-e57c-40d9-bf9a-603e8ee7ae4e.mp4',
+  'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/video/hf_20260701_180757_85a8065a-31ee-48a6-908c-924db1132041.mp4',
+  'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/video/hf_20260701_181737_dabd4f34-dbbe-47c9-8773-15c4a5d9b1cb.mp4',
+  'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/video/hf_20260701_185105_68d29033-1527-4a1f-a3f4-b24858052292.mp4',
+]
 
-function isImage(name: string): boolean {
-  const ext = name.split('.').pop()?.toLowerCase()
-  return !!ext && IMAGE_EXTENSIONS.has(ext)
+type Category = 'amazon' | 'videos' | 'real-estate' | 'food'
+type GridMode  = 'small' | 'large'
+
+const TABS: { id: Category; label: string }[] = [
+  { id: 'amazon',      label: 'Amazon Product Photos' },
+  { id: 'videos',      label: 'Product Videos' },
+  { id: 'real-estate', label: 'Real Estate' },
+  { id: 'food',        label: 'Food & Restaurants' },
+]
+
+// ─── helpers ─────────────────────────────────────────────────────────────────
+
+function isImage(name: string) {
+  return !!IMAGE_EXTENSIONS.has(name.split('.').pop()?.toLowerCase() ?? '')
 }
 
-// Grid toggle icon components
+function scrollToContact() {
+  document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
+}
+
+// ─── grid view toggle icons ───────────────────────────────────────────────────
+
 function SmallGridIcon({ active }: { active: boolean }) {
-  const color = active ? '#1476ff' : '#9CA3AF'
+  const c = active ? '#1476ff' : '#9CA3AF'
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
       {[0,1,2,3,4,5,6,7].map((i) => (
-        <rect key={i} x={1 + (i % 4) * 4.25} y={1 + Math.floor(i / 4) * 8.5} width="3" height="6.5" rx="0.6" fill={color} />
+        <rect key={i} x={1 + (i % 4) * 4.25} y={1 + Math.floor(i / 4) * 8.5} width="3" height="6.5" rx="0.6" fill={c} />
       ))}
     </svg>
   )
 }
 
 function LargeGridIcon({ active }: { active: boolean }) {
-  const color = active ? '#1476ff' : '#9CA3AF'
+  const c = active ? '#1476ff' : '#9CA3AF'
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
       {[0,1,2,3].map((i) => (
-        <rect key={i} x={1 + (i % 2) * 9} y={1 + Math.floor(i / 2) * 9} width="7" height="7" rx="1" fill={color} />
+        <rect key={i} x={1 + (i % 2) * 9} y={1 + Math.floor(i / 2) * 9} width="7" height="7" rx="1" fill={c} />
       ))}
     </svg>
   )
 }
 
-/* ── Per-image grid card with branded loading state ── */
-function GridImage({
-  url,
-  index,
-  mode,
-  onClick,
-}: {
-  url: string
-  index: number
-  mode: GridMode
-  onClick: () => void
-}) {
+// ─── image grid card ─────────────────────────────────────────────────────────
+
+function GridImage({ url, index, mode, onClick }: { url: string; index: number; mode: GridMode; onClick: () => void }) {
   const [loaded, setLoaded] = useState(false)
 
   if (mode === 'small') {
     return (
-      <button
-        onClick={onClick}
-        className="group aspect-square rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-150 hover:scale-[1.04] focus:outline-none focus:ring-2 focus:ring-[#1476ff] focus:ring-offset-1"
-      >
+      <button onClick={onClick} className="group aspect-square rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-150 hover:scale-[1.04] focus:outline-none focus:ring-2 focus:ring-[#1476ff] focus:ring-offset-1">
         <div className="relative w-full h-full bg-gray-100">
-          {!loaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10">
-              <ApertureSpinner size="sm" />
-            </div>
-          )}
-          <Image
-            src={url}
-            alt={`PhotoYum product ${index + 1}`}
-            fill
-            className={`object-cover group-hover:opacity-90 transition-all duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
-            sizes="(max-width: 640px) 25vw, (max-width: 1024px) 16vw, 12.5vw"
-            unoptimized
-            onLoad={() => setLoaded(true)}
-          />
+          {!loaded && <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10"><ApertureSpinner size="sm" /></div>}
+          <Image src={url} alt={`PhotoYum product ${index + 1}`} fill className={`object-cover group-hover:opacity-90 transition-all duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`} sizes="(max-width: 640px) 25vw, (max-width: 1024px) 16vw, 12.5vw" unoptimized onLoad={() => setLoaded(true)} />
         </div>
       </button>
     )
   }
 
   return (
-    <button
-      onClick={onClick}
-      className="block w-full break-inside-avoid rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#1476ff] focus:ring-offset-2 group"
-    >
+    <button onClick={onClick} className="block w-full break-inside-avoid rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#1476ff] focus:ring-offset-2 group">
       <div className="relative bg-gray-50">
-        {!loaded && (
-          <div className="absolute inset-0 min-h-[200px] flex items-center justify-center bg-gray-100 z-10 rounded-2xl aspect-square">
-            <ApertureSpinner size="md" />
-          </div>
-        )}
-        <Image
-          src={url}
-          alt={`PhotoYum product ${index + 1}`}
-          width={600}
-          height={600}
-          className={`w-full h-auto object-cover group-hover:opacity-95 transition-all duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          unoptimized
-          onLoad={() => setLoaded(true)}
-        />
+        {!loaded && <div className="absolute inset-0 min-h-[200px] flex items-center justify-center bg-gray-100 z-10 rounded-2xl aspect-square"><ApertureSpinner size="md" /></div>}
+        <Image src={url} alt={`PhotoYum product ${index + 1}`} width={600} height={600} className={`w-full h-auto object-cover group-hover:opacity-95 transition-all duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`} sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" unoptimized onLoad={() => setLoaded(true)} />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
           <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm rounded-full p-2 shadow">
             <svg className="w-4 h-4 text-[#111827]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -112,234 +95,281 @@ function GridImage({
   )
 }
 
-export default function ProductShowcase() {
-  const [images, setImages] = useState<string[]>([])
-  const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading')
+// ─── muted autoplay video card ────────────────────────────────────────────────
+
+function VideoPreview({ src }: { src: string }) {
+  const ref = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const v = ref.current
+    if (!v) return
+    v.muted = true
+    v.play().catch(() => {})
+  }, [])
+
+  return (
+    <div className="rounded-2xl overflow-hidden shadow-md border border-gray-100 bg-black">
+      <video ref={ref} src={src} muted loop playsInline autoPlay preload="metadata" className="w-full aspect-video object-cover" />
+    </div>
+  )
+}
+
+// ─── placeholder tab for real estate / food ───────────────────────────────────
+
+function ComingSoonTab({ pill, headline, description, cta }: { pill: string; headline: string; description: string; cta: string }) {
+  return (
+    <div className="py-12 text-center space-y-6 max-w-2xl mx-auto">
+      <div className="inline-block bg-[#FF9900]/15 text-[#FF9900] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+        {pill}
+      </div>
+      <h3 className="text-2xl lg:text-3xl font-extrabold text-[#111827]">{headline}</h3>
+      <p className="text-gray-500 leading-relaxed">{description}</p>
+      <div className="inline-flex items-center gap-2 bg-[#1476ff]/8 border border-[#1476ff]/20 rounded-xl px-5 py-3 text-sm text-[#1476ff] font-semibold">
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Gallery coming soon — we're adding examples now
+      </div>
+      <div>
+        <button
+          onClick={scrollToContact}
+          className="inline-flex items-center gap-2 bg-[#FF9900] hover:bg-[#e68900] text-white font-bold px-7 py-3.5 rounded-xl text-base transition-all shadow-lg shadow-orange-100"
+        >
+          {cta}
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// ─── amazon tab (images from Supabase) ───────────────────────────────────────
+
+function AmazonTab() {
+  const [images, setImages]       = useState<string[]>([])
+  const [status, setStatus]       = useState<'loading' | 'loaded' | 'error'>('loading')
   const [errorDetail, setErrorDetail] = useState('')
-  const [lightbox, setLightbox] = useState<string | null>(null)
-  const [gridMode, setGridMode] = useState<GridMode>('large')
+  const [lightbox, setLightbox]   = useState<string | null>(null)
+  const [gridMode, setGridMode]   = useState<GridMode>('large')
 
   const fetchImages = async () => {
-    setStatus('loading')
-    setErrorDetail('')
+    setStatus('loading'); setErrorDetail('')
     try {
       const client = getSupabase()
       const { data, error } = await client.storage
-        .from(BUCKET)
-        .list(FOLDER, { limit: 200, sortBy: { column: 'name', order: 'asc' } })
-
-      if (error) {
-        setErrorDetail(error.message)
-        setStatus('error')
-        return
-      }
-
-      if (!data || data.length === 0) {
-        console.warn(
-          '[ProductShowcase] list() returned empty. If files exist, run in Supabase SQL Editor:\n' +
-          "CREATE POLICY \"Allow anon to list Storage objects\" ON storage.objects FOR SELECT TO anon USING (bucket_id = 'Storage');"
-        )
-      }
-
+        .from(BUCKET).list(FOLDER, { limit: 200, sortBy: { column: 'name', order: 'asc' } })
+      if (error) { setErrorDetail(error.message); setStatus('error'); return }
       const urls = (data ?? [])
         .filter((f) => f.name && !f.name.startsWith('.') && isImage(f.name))
-        .map((f) => {
-          const { data: urlData } = client.storage
-            .from(BUCKET)
-            .getPublicUrl(`${FOLDER}/${f.name}`)
-          return urlData.publicUrl
-        })
-
-      setImages(urls)
-      setStatus('loaded')
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : String(err)
-      setErrorDetail(msg)
-      setStatus('error')
+        .map((f) => client.storage.from(BUCKET).getPublicUrl(`${FOLDER}/${f.name}`).data.publicUrl)
+      setImages(urls); setStatus('loaded')
+    } catch (err) {
+      setErrorDetail(err instanceof Error ? err.message : String(err)); setStatus('error')
     }
   }
 
   useEffect(() => { fetchImages() }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Grid class definitions
-  const smallGridClass = 'grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2'
-  const largeGridClass = 'columns-2 sm:columns-3 lg:columns-4 gap-4 space-y-4'
+  return (
+    <>
+      {/* grid toggle */}
+      {status === 'loaded' && images.length > 0 && (
+        <div className="flex justify-end mb-6">
+          <div className="flex items-center gap-1 bg-gray-100 rounded-xl p-1">
+            {(['small', 'large'] as GridMode[]).map((m) => (
+              <button
+                key={m}
+                onClick={() => setGridMode(m)}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all ${gridMode === m ? 'bg-white shadow-sm text-[#1476ff]' : 'text-gray-400 hover:text-gray-600'}`}
+              >
+                {m === 'small' ? <SmallGridIcon active={gridMode === 'small'} /> : <LargeGridIcon active={gridMode === 'large'} />}
+                <span className="capitalize">{m}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {status === 'loading' && (
+        <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2">
+          {Array.from({ length: 16 }).map((_, i) => (
+            <div key={i} className="aspect-square rounded-xl bg-gray-100 animate-pulse flex items-center justify-center">
+              {i === 7 && <ApertureSpinner size="sm" />}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {status === 'error' && (
+        <div className="text-center py-16 space-y-4">
+          <p className="text-sm text-gray-500">Could not load images.</p>
+          {errorDetail && <p className="text-xs text-red-400 font-mono max-w-sm mx-auto">{errorDetail}</p>}
+          <button onClick={fetchImages} className="text-sm text-[#1476ff] font-semibold hover:underline">Try again</button>
+        </div>
+      )}
+
+      {status === 'loaded' && images.length === 0 && (
+        <div className="text-center py-16"><p className="text-sm text-gray-500">No images yet — check back soon.</p></div>
+      )}
+
+      {status === 'loaded' && images.length > 0 && gridMode === 'small' && (
+        <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2">
+          {images.map((url, i) => <GridImage key={url} url={url} index={i} mode="small" onClick={() => setLightbox(url)} />)}
+        </div>
+      )}
+
+      {status === 'loaded' && images.length > 0 && gridMode === 'large' && (
+        <div className="columns-2 sm:columns-3 lg:columns-4 gap-4 space-y-4">
+          {images.map((url, i) => <GridImage key={url} url={url} index={i} mode="large" onClick={() => setLightbox(url)} />)}
+        </div>
+      )}
+
+      {status === 'loaded' && images.length > 0 && (
+        <div className="text-center mt-12">
+          <button
+            onClick={scrollToContact}
+            className="inline-flex items-center gap-2 bg-[#FF9900] hover:bg-[#e68900] text-white font-bold px-7 py-3.5 rounded-xl text-base transition-all shadow-lg shadow-orange-100"
+          >
+            Get images like these for your product
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      )}
+
+      {lightbox && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setLightbox(null)}>
+          <button className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" onClick={() => setLightbox(null)}>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+          <div className="relative max-w-4xl max-h-[90vh] w-full" onClick={(e) => e.stopPropagation()}>
+            <Image src={lightbox} alt="Preview" width={1200} height={1200} className="w-full h-auto max-h-[90vh] object-contain rounded-2xl shadow-2xl" unoptimized />
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+
+// ─── videos tab ───────────────────────────────────────────────────────────────
+
+function VideosTab() {
+  return (
+    <>
+      <div className="grid sm:grid-cols-2 gap-5">
+        {VIDEOS.map((src, i) => <VideoPreview key={i} src={src} />)}
+      </div>
+      <div className="text-center mt-10">
+        <button
+          onClick={scrollToContact}
+          className="inline-flex items-center gap-2 bg-[#FF9900] hover:bg-[#e68900] text-white font-bold px-7 py-3.5 rounded-xl text-base transition-all shadow-lg shadow-orange-100"
+        >
+          Submit Your Product
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </>
+  )
+}
+
+// ─── category header copy ────────────────────────────────────────────────────
+
+const CATEGORY_HEADER: Record<Category, { pill: string; headline: string; desc: string }> = {
+  amazon: {
+    pill: 'Amazon Ready',
+    headline: 'Product images that help listings sell',
+    desc: 'Premium hero shots, lifestyle images, and infographics for Amazon sellers, ecommerce brands, and online stores.',
+  },
+  videos: {
+    pill: 'Product Videos',
+    headline: 'Motion that sells',
+    desc: 'Short product showcase videos for Amazon A+, TikTok, Reels, and ads.',
+  },
+  'real-estate': {
+    pill: 'Real Estate',
+    headline: 'Better property photos. More buyer attention.',
+    desc: 'Clean, premium property images for listings, rentals, Airbnb, agents, and real estate teams.',
+  },
+  food: {
+    pill: 'Food & Restaurants',
+    headline: 'Food photos that make people hungry',
+    desc: 'Better menu, Yelp, Google, DoorDash, Uber Eats, website, and social images for restaurants and food brands.',
+  },
+}
+
+// ─── main export ─────────────────────────────────────────────────────────────
+
+export default function ProductShowcase() {
+  const [category, setCategory] = useState<Category>('amazon')
+
+  // Listen for nav dropdown events
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const cat = (e as CustomEvent<string>).detail as Category
+      if (cat) setCategory(cat)
+    }
+    window.addEventListener('set-examples-tab', handler)
+    return () => window.removeEventListener('set-examples-tab', handler)
+  }, [])
+
+  const hdr = CATEGORY_HEADER[category]
 
   return (
     <section id="examples" className="bg-white py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Header + grid toggle */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
-          <div className="space-y-3">
-            <div className="inline-block bg-[#FF9900]/15 text-[#FF9900] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
-              Our Work
-            </div>
-            <h2 className="text-3xl lg:text-4xl font-extrabold text-[#111827]">
-              Product images we&apos;ve created
-            </h2>
-            <p className="text-gray-600 max-w-lg">
-              Real Amazon-ready images — hero shots, lifestyle scenes, and infographics
-              that make listings stand out.
-            </p>
+        {/* Section header */}
+        <div className="text-center space-y-3 mb-10">
+          <div className="inline-block bg-[#FF9900]/15 text-[#FF9900] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+            {hdr.pill}
           </div>
-
-          {/* Toggle — only show when images loaded */}
-          {status === 'loaded' && images.length > 0 && (
-            <div className="flex items-center gap-1 bg-gray-100 rounded-xl p-1 self-start sm:self-auto flex-shrink-0">
-              <button
-                onClick={() => setGridMode('small')}
-                aria-label="Small grid"
-                title="Small grid (8 per row)"
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all ${
-                  gridMode === 'small'
-                    ? 'bg-white text-[#1476ff] shadow-sm'
-                    : 'text-gray-400 hover:text-gray-600'
-                }`}
-              >
-                <SmallGridIcon active={gridMode === 'small'} />
-                <span>Small</span>
-              </button>
-              <button
-                onClick={() => setGridMode('large')}
-                aria-label="Large grid"
-                title="Large grid (4 per row)"
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all ${
-                  gridMode === 'large'
-                    ? 'bg-white text-[#1476ff] shadow-sm'
-                    : 'text-gray-400 hover:text-gray-600'
-                }`}
-              >
-                <LargeGridIcon active={gridMode === 'large'} />
-                <span>Large</span>
-              </button>
-            </div>
-          )}
+          <h2 className="text-3xl lg:text-4xl font-extrabold text-[#111827]">{hdr.headline}</h2>
+          <p className="text-gray-600 max-w-lg mx-auto">{hdr.desc}</p>
         </div>
 
-        {/* Loading skeleton */}
-        {status === 'loading' && (
-          <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2">
-            {Array.from({ length: 16 }).map((_, i) => (
-              <div key={i} className="aspect-square rounded-xl bg-gray-100 animate-pulse flex items-center justify-center">
-                {i === 7 && <ApertureSpinner size="sm" />}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Error */}
-        {status === 'error' && (
-          <div className="text-center py-16 space-y-4">
-            <div className="w-14 h-14 rounded-full bg-red-50 text-red-400 flex items-center justify-center mx-auto">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <p className="text-sm text-gray-500">Could not load images. Please try again.</p>
-            {errorDetail && (
-              <p className="text-xs text-red-400 font-mono max-w-sm mx-auto">{errorDetail}</p>
-            )}
+        {/* Category tabs */}
+        <div className="flex flex-wrap justify-center gap-2 mb-10">
+          {TABS.map((tab) => (
             <button
-              onClick={fetchImages}
-              className="inline-flex items-center gap-1.5 text-sm text-[#1476ff] font-semibold hover:underline"
+              key={tab.id}
+              onClick={() => setCategory(tab.id)}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-150 ${
+                category === tab.id
+                  ? 'bg-[#FF9900] text-white shadow-md shadow-orange-100'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              Try again
+              {tab.label}
             </button>
-          </div>
+          ))}
+        </div>
+
+        {/* Tab content */}
+        {category === 'amazon'      && <AmazonTab />}
+        {category === 'videos'      && <VideosTab />}
+        {category === 'real-estate' && (
+          <ComingSoonTab
+            pill="Real Estate"
+            headline="Better property photos. More buyer attention."
+            description="Clean, premium property images for listings, rentals, Airbnb, agents, and real estate teams."
+            cta="Submit Your Project"
+          />
+        )}
+        {category === 'food' && (
+          <ComingSoonTab
+            pill="Food & Restaurants"
+            headline="Food photos that make people hungry"
+            description="Better menu, Yelp, Google, DoorDash, Uber Eats, website, and social images for restaurants and food brands."
+            cta="Submit Your Project"
+          />
         )}
 
-        {/* Empty */}
-        {status === 'loaded' && images.length === 0 && (
-          <div className="text-center py-16 space-y-3">
-            <div className="w-14 h-14 rounded-full bg-[#1476ff]/10 text-[#1476ff] flex items-center justify-center mx-auto">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <p className="text-sm text-gray-500">No product images yet. Check back soon.</p>
-            <button
-              onClick={fetchImages}
-              className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#1476ff] transition-colors"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              Refresh
-            </button>
-          </div>
-        )}
-
-        {/* Small grid — 8 per row on desktop */}
-        {status === 'loaded' && images.length > 0 && gridMode === 'small' && (
-          <div className={smallGridClass}>
-            {images.map((url, i) => (
-              <GridImage key={url} url={url} index={i} mode="small" onClick={() => setLightbox(url)} />
-            ))}
-          </div>
-        )}
-
-        {/* Large grid — masonry, 4 per row on desktop */}
-        {status === 'loaded' && images.length > 0 && gridMode === 'large' && (
-          <div className={largeGridClass}>
-            {images.map((url, i) => (
-              <GridImage key={url} url={url} index={i} mode="large" onClick={() => setLightbox(url)} />
-            ))}
-          </div>
-        )}
-
-        {/* CTA */}
-        {status === 'loaded' && images.length > 0 && (
-          <div className="text-center mt-12">
-            <button
-              onClick={() => {
-                const el = document.querySelector('#contact')
-                if (el) el.scrollIntoView({ behavior: 'smooth' })
-              }}
-              className="inline-flex items-center gap-2 bg-[#FF9900] hover:bg-[#e68900] text-white font-bold px-7 py-3.5 rounded-xl text-base transition-all shadow-lg shadow-orange-100"
-            >
-              Get images like these for your product
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        )}
       </div>
-
-      {/* Lightbox */}
-      {lightbox && (
-        <div
-          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4"
-          onClick={() => setLightbox(null)}
-        >
-          <button
-            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-            onClick={() => setLightbox(null)}
-            aria-label="Close"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <div
-            className="relative max-w-4xl max-h-[90vh] w-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Image
-              src={lightbox}
-              alt="Product image preview"
-              width={1200}
-              height={1200}
-              className="w-full h-auto max-h-[90vh] object-contain rounded-2xl shadow-2xl"
-              unoptimized
-            />
-          </div>
-        </div>
-      )}
     </section>
   )
 }

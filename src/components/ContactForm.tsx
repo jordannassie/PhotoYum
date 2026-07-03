@@ -34,7 +34,16 @@ const PACKAGE_OPTIONS = [
   'Other',
 ]
 
+const SERVICE_CATEGORY_OPTIONS = [
+  'Amazon Product Photos',
+  'Product Videos',
+  'Real Estate Photos',
+  'Food / Restaurant Photos',
+  'Other',
+]
+
 type Fields = {
+  service_category: string
   name: string
   phone: string
   email: string
@@ -52,6 +61,7 @@ export default function ContactForm() {
   const [formState, setFormState] = useState<FormState>('idle')
   const [errorMsg, setErrorMsg] = useState('')
   const [fields, setFields] = useState<Fields>({
+    service_category: '',
     name: '',
     phone: '',
     email: '',
@@ -201,6 +211,22 @@ export default function ContactForm() {
 
                 <div className="border-t border-gray-100" />
 
+                {/* What do you need? */}
+                <div className="space-y-1.5">
+                  <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                    <svg className="h-4 w-4 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>What do you need?</span>
+                  </label>
+                  <select value={fields.service_category} onChange={set('service_category')} className={inputClass}>
+                    <option value="">Select a category...</option>
+                    {SERVICE_CATEGORY_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
+                  </select>
+                </div>
+
+                <div className="border-t border-gray-100" />
+
                 {/* Name + Phone */}
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
@@ -250,9 +276,9 @@ export default function ContactForm() {
                 <div className="space-y-1.5">
                   <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                     <ImageIcon className="h-4 w-4 text-orange-500 flex-shrink-0" />
-                    <span>Product Photo URL</span>
+                    <span>Photo / Website / Listing URL</span>
                   </label>
-                  <input type="text" value={fields.product_photo_url} onChange={set('product_photo_url')} placeholder="Dropbox, Google Drive, Amazon image, or website link" className={inputClass} />
+                  <input type="text" value={fields.product_photo_url} onChange={set('product_photo_url')} placeholder="Amazon link, website, Google Drive, Dropbox, real estate listing, menu link, or current photos" className={inputClass} />
                 </div>
 
                 {/* Product Count + Package Interest */}
