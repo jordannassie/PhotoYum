@@ -2,6 +2,10 @@
 
 import { useState, FormEvent } from 'react'
 import Image from 'next/image'
+import {
+  User, Phone, Mail, Building2, Link as LinkIcon,
+  Image as ImageIcon, Package, ShoppingBag, Sparkles, TicketPercent,
+} from 'lucide-react'
 
 const SUPPORT_AVATAR_URL =
   'https://rjudiqojqxpoltfpgnej.supabase.co/storage/v1/object/public/Storage/People/c50c40f7-9056-4db0-898b-4ee268d10e53.png'
@@ -200,43 +204,64 @@ export default function ContactForm() {
                 {/* Name + Phone */}
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-gray-700">Your Name <span className="text-red-500">*</span></label>
+                    <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                      <User className="h-4 w-4 text-orange-500 flex-shrink-0" />
+                      <span>Your Name <span className="text-red-500">*</span></span>
+                    </label>
                     <input type="text" value={fields.name} onChange={set('name')} placeholder="Jane Smith" required className={inputClass} />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-gray-700">Phone Number <span className="text-red-500">*</span></label>
+                    <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                      <Phone className="h-4 w-4 text-orange-500 flex-shrink-0" />
+                      <span>Phone Number <span className="text-red-500">*</span></span>
+                    </label>
                     <input type="tel" value={fields.phone} onChange={set('phone')} placeholder="+1 (555) 000-0000" required className={inputClass} />
                   </div>
                 </div>
 
                 {/* Email */}
                 <div className="space-y-1.5">
-                  <label className="block text-sm font-semibold text-gray-700">Email Address <span className="text-red-500">*</span></label>
+                  <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                    <Mail className="h-4 w-4 text-orange-500 flex-shrink-0" />
+                    <span>Email Address <span className="text-red-500">*</span></span>
+                  </label>
                   <input type="email" value={fields.email} onChange={set('email')} placeholder="jane@brand.com" required className={inputClass} />
                 </div>
 
                 {/* Brand Name */}
                 <div className="space-y-1.5">
-                  <label className="block text-sm font-semibold text-gray-700">Brand Name</label>
+                  <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                    <Building2 className="h-4 w-4 text-orange-500 flex-shrink-0" />
+                    <span>Brand Name</span>
+                  </label>
                   <input type="text" value={fields.brand_name} onChange={set('brand_name')} placeholder="Your brand name" className={inputClass} />
                 </div>
 
                 {/* Product Listing URL */}
                 <div className="space-y-1.5">
-                  <label className="block text-sm font-semibold text-gray-700">Product Listing URL</label>
+                  <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                    <LinkIcon className="h-4 w-4 text-orange-500 flex-shrink-0" />
+                    <span>Product Listing URL</span>
+                  </label>
                   <input type="text" value={fields.product_listing_url} onChange={set('product_listing_url')} placeholder="https://amazon.com/dp/..." className={inputClass} />
                 </div>
 
                 {/* Product Photo URL */}
                 <div className="space-y-1.5">
-                  <label className="block text-sm font-semibold text-gray-700">Product Photo URL</label>
+                  <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                    <ImageIcon className="h-4 w-4 text-orange-500 flex-shrink-0" />
+                    <span>Product Photo URL</span>
+                  </label>
                   <input type="text" value={fields.product_photo_url} onChange={set('product_photo_url')} placeholder="Dropbox, Google Drive, Amazon image, or website link" className={inputClass} />
                 </div>
 
                 {/* Product Count + Package Interest */}
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-gray-700">How many products?</label>
+                    <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                      <Package className="h-4 w-4 text-orange-500 flex-shrink-0" />
+                      <span>How many products?</span>
+                    </label>
                     <select id="product-count-select" value={fields.product_count} onChange={set('product_count')} className={inputClass}>
                       <option value="">Select...</option>
                       {PRODUCT_COUNT_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
@@ -251,7 +276,10 @@ export default function ContactForm() {
                     )}
                   </div>
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-gray-700">Package Interest</label>
+                    <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                      <ShoppingBag className="h-4 w-4 text-orange-500 flex-shrink-0" />
+                      <span>Package Interest</span>
+                    </label>
                     <select value={fields.package_interest} onChange={set('package_interest')} className={inputClass}>
                       <option value="">Select...</option>
                       {PACKAGE_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
@@ -261,13 +289,19 @@ export default function ContactForm() {
 
                 {/* Improvement Notes */}
                 <div className="space-y-1.5">
-                  <label className="block text-sm font-semibold text-gray-700">What do you want improved?</label>
+                  <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                    <Sparkles className="h-4 w-4 text-orange-500 flex-shrink-0" />
+                    <span>What do you want improved?</span>
+                  </label>
                   <textarea value={fields.improvement_notes} onChange={set('improvement_notes')} rows={3} placeholder="Describe your current images and what you'd like changed or improved..." className={inputClass + ' resize-none'} />
                 </div>
 
                 {/* ── Coupon code ── */}
                 <div className="space-y-1.5">
-                  <label className="block text-sm font-semibold text-gray-700">Coupon Code</label>
+                  <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                    <TicketPercent className="h-4 w-4 text-orange-500 flex-shrink-0" />
+                    <span>Coupon Code</span>
+                  </label>
                   <div className="flex gap-2">
                     <input
                       type="text"
