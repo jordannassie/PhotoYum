@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Volume2, VolumeX } from 'lucide-react'
 
@@ -10,6 +10,15 @@ const VIDEO_URL =
 export default function PhotoYumVideoSection() {
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const [soundOn, setSoundOn] = useState(false)
+
+  // React doesn't reliably set the `muted` DOM attribute via the prop,
+  // so we force it and trigger play() imperatively after mount.
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    v.muted = true
+    v.play().catch(() => {})
+  }, [])
 
   const unmute = async () => {
     const v = videoRef.current
