@@ -4,6 +4,7 @@ import TopTrustBanner from '@/components/TopTrustBanner'
 import Hero from '@/components/Hero'
 import TrustStrip from '@/components/TrustStrip'
 import PhotoYumVideoSection from '@/components/PhotoYumVideoSection'
+import CategoryCards from '@/components/CategoryCards'
 import Included from '@/components/Included'
 import ProductShowcase from '@/components/ProductShowcase'
 import VideoShowcase from '@/components/VideoShowcase'
@@ -24,6 +25,7 @@ export default function Home() {
         <PromoBanner />
         <TopTrustBanner />
         <Hero />
+        <CategoryCards />
         <PhotoYumVideoSection />
         <TrustStrip />
         <Included />

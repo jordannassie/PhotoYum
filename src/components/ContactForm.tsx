@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, FormEvent, useEffect } from 'react'
 import Image from 'next/image'
 import {
   User, Phone, Mail, Building2, Link as LinkIcon,
@@ -35,12 +35,19 @@ const PACKAGE_OPTIONS = [
 ]
 
 const SERVICE_CATEGORY_OPTIONS = [
-  'Amazon Product Photos',
+  'Product Photos',
   'Product Videos',
-  'Real Estate Photos',
-  'Food / Restaurant Photos',
+  'Property Photos',
+  'Food Photos',
   'Other',
 ]
+
+const CAT_PARAM_MAP: Record<string, string> = {
+  products: 'Product Photos',
+  videos:   'Product Videos',
+  homes:    'Property Photos',
+  food:     'Food Photos',
+}
 
 type Fields = {
   service_category: string
@@ -72,6 +79,14 @@ export default function ContactForm() {
     package_interest: '',
     improvement_notes: '',
   })
+
+  // Preselect category from URL ?cat= param
+  useEffect(() => {
+    const cat = new URLSearchParams(window.location.search).get('cat')
+    if (cat && CAT_PARAM_MAP[cat]) {
+      setFields((prev) => ({ ...prev, service_category: CAT_PARAM_MAP[cat] }))
+    }
+  }, [])
 
   // Coupon state
   const [couponInput, setCouponInput]   = useState('')

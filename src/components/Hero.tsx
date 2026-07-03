@@ -45,24 +45,23 @@ export default function Hero() {
           <div className="space-y-8 z-10">
             <div className="inline-flex items-center gap-2 bg-[#1476ff]/10 text-[#1476ff] text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
               <span className="w-1.5 h-1.5 rounded-full bg-[#FF9900] inline-block" />
-              Amazon Product Images in 72 Hours
+              AI-Enhanced Photos &amp; Videos
             </div>
 
             <div className="space-y-1">
               <h1 className="text-5xl lg:text-6xl font-extrabold text-[#111827] leading-[1.1] tracking-tight">
-                Better images.
+                Better photos
               </h1>
               <h1 className="text-5xl lg:text-6xl font-extrabold text-[#111827] leading-[1.1] tracking-tight">
-                More clicks.
+                and videos
               </h1>
               <h1 className="text-5xl lg:text-6xl font-extrabold text-[#FF9900] leading-[1.1] tracking-tight">
-                Higher sales.
+                that sell.
               </h1>
             </div>
 
             <p className="text-lg text-gray-600 leading-relaxed max-w-lg">
-              We create premium Amazon product images that help shoppers stop scrolling
-              and start buying — without an expensive studio shoot.
+              AI-enhanced visuals for products, properties, restaurants, and ecommerce brands — delivered fast.
             </p>
 
             <div className="grid grid-cols-2 gap-3">
